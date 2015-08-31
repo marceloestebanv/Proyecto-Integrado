@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+        <f:facet name="first">
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="/WebApplication5/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/WebApplication5/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="/WebApplication5/resources/css/docs.min.css" rel="stylesheet" type="text/css"/>
+               <link href="/WebApplication5/resources/css/newcss.css" rel="stylesheet" type="text/css"/>
+</f:facet>
+</h:head>
+<h:body>
+
+    <div class="row" id="logo">
+         <img src="/WebApplication5/resources/imagen/logofamilia.png" alt=""/>
+</div>
+    
+    <div class="row" id="h1titulo">
+         <h1 >
+             PPF Aitué
+         </h1>
+</div>
+           
+<div class="row" style="background-color: #F5F5F5;padding: 20px;">
+<div class="col-md-3"><img src="/WebApplication5/resources/imagen/logo_uv.png" alt=""/>
+</div>
+<div class="span6 pull-right">
+<div class="hidden-xs">
+<img src="/WebApplication5/resources/imagen/header_decom.png" alt=""/>
+</div>
+</div>
+</div>
+         
+<div class="row">
+    <p:growl autoUpdate="true"/>
+    <div class="col-md-3" style="margin: 10px">
+    <h:form>
+    <p:panelMenu style="width:300px">
+        <p:submenu label="Gestionar Usuarios">
+            <p:menuitem value="Ingresar Nuevo Usuario" actionListener="#{menuBeanAdministrador.nuevo}" icon="ui-icon-disk" />
+            <p:menuitem value="Modificar un Usuario" actionListener="#{menuBeanAdministrador.modificar}" icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Eliminar un Usuario" actionListener="#{menuBeanAdministrador.eliminar}" icon="ui-icon-close" />
+         
+        </p:submenu>
+        <p:submenu label="Ingresar al Sistema">
+            <p:menuitem value="Sistema NCFAS" actionListener="#{menuBeanAdministrador.sistema}" />
+            
+        </p:submenu>
+    </p:panelMenu>
+      
+        <p:panelGrid columns="2">
+    <f:facet name="header">
+        <img src="/WebApplication5/resources/imagen/mujer.png" alt=""/>
+    </f:facet>
+ 
+    <h:outputText value="Nombre:" />
+    <h:outputText value="#{mbsesionBean.nombreusuario}" />
+ 
+    <h:outputText value="Tipo:" />
+    <h:outputText value="Administrador" />
+ 
+</p:panelGrid>
+<h:commandButton id="salir" class="btn btn-info" value="Salir" action="#{usuarioBean.logout()}" />
+</h:form> 
+</div>
+                    
+                    
+<div class="col-md-7" style="margin: 10px">
+    <p:fieldset legend="Seleccione un usuario para modificar sus valores:" style="margin-bottom:20px"> 
+        
+             <p:layoutUnit position="center">    
+            <!-- DATATABLE-->
+<h:form id="formMostrar">
+    <p:dataTable var="usuario" value="#{usuarioBean.listarUsuarios()}" emptyMessage="No hay personas disponibles"
+paginator="true" rows="10" paginatorPosition="top"
+paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+{PageLinks} {NextPageLink} {RowsPerPageDropdown}"
+rowsPerPageTemplate="10">
+                
+               
+                <p:column headerText="Nombre Usuario">
+                    <h:outputText value="#{usuario.nombre}"/>
+                </p:column>
+                <p:column headerText="Acción" >
+                   
+                    <p:commandButton  value="Modificar" onclick="PF('dlgmodificar').show();" update=":formModificar" >
+                        <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}"/>
+                    </p:commandButton>
+                    
+                </p:column>
+                </p:dataTable>
+                </h:form>   
+                </p:layoutUnit>
+
+            
+            
+            <p:dialog id="dlg" header="Modificar Usuario" showEffect="explode" hideEffect="bounce"
+                    widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formModificar">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Rut del Usuario"/>
+                    <p:inputText value="#{usuarioBean.usuario.rut}" disabled="true" />
+                    
+                    <p:outputLabel value="Nombre del Usuario"/>
+                    <p:inputText value="#{usuarioBean.usuario.nombre}" />
+                
+ 
+                <p:outputLabel value="Correo del Usuario"/>
+                <p:inputText value="#{usuarioBean.usuario.correo}" />
+                
+                <p:outputLabel value="Contrseña del Usuario"/>
+                <p:inputText value="#{usuarioBean.usuario.password}" />
+                
+                </p:panelGrid>
+                <p:commandButton actionListener="#{usuarioBean.modificar()}" value="Modificar Persona" update=":formMostrar"
+                                 onclick="PF('dlgmodificar').hide();"/>
+            </h:form>
+        </p:dialog>
+            
+              <p:dialog id="dlg2" header="Eliminar Persona" showEffect="explode" hideEffect="bounce"
+                    widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+               
+                <p:outputLabel value="¿Desea eliminar a la persona?" />
+                
+                <p:commandButton actionListener="#{usuarioBean.eliminar()}" value="Si" update=":formMostrar"
+                                 onclick="PF('dlgeliminar').hide();"/>
+                 <p:commandButton  value="No" 
+                                 onclick="PF('dlg2').hide();"/>
+            </h:form>
+            </p:dialog>
+           
+    </p:fieldset>    
+</div>  
+                    
+</div>
+</h:body>
+</f:view>
+</html>

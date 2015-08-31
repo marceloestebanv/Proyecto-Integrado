@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Gestionar Tests</title>
+                  <link href="/Proyecto/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="/Proyecto/resources/js/bootstrap.js" type="text/javascript"></script>
+        <link href="/Proyecto/resources/css/docs.min.css" rel="stylesheet" type="text/css"/>
+                
+                
+            </f:facet>
+            
+               <style type="text/css">
+            h1 {
+               display: block; 
+               text-align: center
+            }
+              .form {
+     margin-left: 10%;
+    margin-right:10%;
+     //si pongo esto me aparece la barra de scroll  width:100%;
+        
+    }
+            
+            </style>
+            
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north"   size="150"  collapsible="true" style="color: #888">
+            
+                    <h:panelGrid  columns ="3"  cellpadding="15" width="100%"  >
+            <p:graphicImage value="/resources/imagen/logo_uv.png"  style="display:block;padding: 25px"/>
+            <h1> CAT-A</h1>
+            
+            <h:panelGrid   style="display: block;float: right;text-align: center " >
+            <p:graphicImage  value="/resources/imagen/images.jpg" width="30%"  />
+            <h:outputText value="#{loginControlador.usuario.nombre}" style="display: block;  text-align: center"  /> 
+            </h:panelGrid>
+            </h:panelGrid>
+                    
+                    
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="70" closable="true" collapsible="true">
+                 <h:outputText value=" Universidad de Valparaíso. 
+                   Todos los derechos reservados. 
+                   Chile - 2015"  style="padding: 1%; display: block;text-align: center"  /> 
+                 
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Menu" collapsible="true">
+                     <h:form id="formMenu">
+                    <p:menu>
+                       
+                          <p:menuitem value="Inicio"   outcome="inicioCAT.xhtml" /> 
+                            <p:menuitem value="Agregar Usuario" outcome="/nuevoUsuario.xhtml" />
+                            <p:menuitem value="Gestionar Cuenta" outcome="/gestionarUsuario.xhtml" />
+                            <p:menuitem value="Agregar Examinado" outcome="nuevoExaminado.xhtml" />
+                            <p:menuitem value="Agregar Test" outcome="ingresarTest.xhtml" />
+                             <p:menuitem value="Histórico de Test" outcome="gestionarTests.xhtml" />
+                             <p:menuitem value="Estadísticas" outcome="consultarExaminados.xhtml" />
+                             <p:menuitem value="Administrar Terminos" outcome="administrarTerminos.xhtml" />
+                             <p:menuitem value="Salir" action="#{loginControlador.logout()}" />
+                            
+                   </p:menu>
+                    
+                     </h:form>
+                  </p:layoutUnit >
+
+                <p:layoutUnit position="center">
+                  
+                    <h:form id="formMostrar" class="form">
+                           
+                        <h2>Histórico de Test</h2>
+                        
+                       <p:dataTable var="test" value="#{testBean.tests}"
+                         emptyMessage="No hay Tests disponibles"
+paginator="true" rows="10" paginatorPosition="bottom"
+paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+rowsPerPageTemplate="10"
+                         >
+                
+                           <p:column headerText="idTest">
+                               <h:outputText value="#{test.idTest}"/>
+                </p:column>
+                           
+                           
+                <p:column headerText="Rut Examinado">
+                    <h:outputText value="#{test.rutExaminado}"/>
+                </p:column>
+                <p:column headerText="Rut Profesional">
+                    <h:outputText value="#{test.rutUsuario}"/>
+                </p:column>
+                 <p:column headerText="Fecha ">
+                     <h:outputText value="#{test.fecha}"/>
+                </p:column>
+                
+       
+                <p:column headerText="Accion">
+                    
+                    <p:commandButton value="Relatos" actionListener="#{testBean.redireccionar(test.idTest)}">
+                         
+                        </p:commandButton>
+                    
+                    </p:column>
+                    
+                    
+               <p:column headerText="Accion">
+                    
+                   <p:commandButton value="Resultado" actionListener="#{calcularMetricas.consultarMetricasTestPagina(test.idTest)}">
+                         
+                        </p:commandButton>
+                    
+                    
+                </p:column>
+            
+             
+             <p:column headerText="Accion">
+                    <p:commandButton value="Eliminar" onclick="PF('dlgeliminar').show();" >
+                        <f:setPropertyActionListener target="#{testBean.test}" value="#{test}"/>
+                    </p:commandButton>
+                   
+                </p:column>
+                
+                
+                </p:dataTable>
+            
+        </h:form>
+                </p:layoutUnit>
+
+            </p:layout>
+            
+            
+            <p:dialog id="dlg2" header="Eliminar Test"  showEffect="explode" hideEffect="bounce"
+                    widgetVar="dlgeliminar" modal="true" resizable="false" minWidth="200">
+            <h:form id="formEliminar">
+               
+                <p:outputLabel value="¿Desea eliminar el test?" />
+                
+                <p:commandButton actionListener="#{testBean.eliminarTest(testBean.test)}" value="Si" update=":formMostrar"
+                                 onclick="PF('dlgeliminar').hide();"/>
+                 <p:commandButton  value="No" 
+                                 onclick="PF('dlg2').hide();"/>
+            </h:form>
+        </p:dialog>
+
+        </h:body>
+    </f:view>
+</html>
+

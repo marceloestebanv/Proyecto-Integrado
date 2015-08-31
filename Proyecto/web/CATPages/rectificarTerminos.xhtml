@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                  <link href="/Proyecto/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="/Proyecto/resources/js/bootstrap.js" type="text/javascript"></script>
+       
+                
+                
+                <title>Rectificar Terminos</title>
+            </f:facet>
+            
+               <style type="text/css">
+            h1 {
+               display: block; 
+               text-align: center
+            }
+                  .form {
+     margin-left: 10%;
+    margin-right:10%;
+     //si pongo esto me aparece la barra de scroll  width:100%;
+        
+    }
+            
+            </style>
+            
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north"   size="150"  collapsible="true" style="color: #888">
+            
+                    <h:panelGrid  columns ="3"  cellpadding="15" width="100%"  >
+            <p:graphicImage value="/resources/imagen/logo_uv.png"  style="display:block;padding: 25px"/>
+            <h1> CAT-A</h1>
+            
+            <h:panelGrid   style="display: block;float: right;text-align: center " >
+            <p:graphicImage  value="/resources/imagen/images.jpg" width="30%"  />
+            <h:outputText value="#{loginControlador.usuario.nombre}" style="display: block;  text-align: center"  /> 
+            </h:panelGrid>
+            </h:panelGrid>
+                    
+                    
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="70" closable="true" collapsible="true">
+                 <h:outputText value=" Universidad de Valparaíso. 
+                   Todos los derechos reservados. 
+                   Chile - 2015"  style="padding: 1%; display: block;text-align: center"  /> 
+                 
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="200" header="Menu">
+                   
+                      <h:form>
+                    <p:menu>
+                       
+                         <p:menuitem value="Inicio"   outcome="inicioCAT.xhtml" /> 
+                            <p:menuitem value="Agregar Usuario" outcome="/nuevoUsuario.xhtml" />
+                            <p:menuitem value="Gestionar Cuenta" outcome="/gestionarUsuario.xhtml" />
+                            <p:menuitem value="Agregar Examinado" outcome="nuevoExaminado.xhtml" />
+                            <p:menuitem value="Agregar Test" outcome="ingresarTest.xhtml" />
+                             <p:menuitem value="Histórico de Test" outcome="gestionarTests.xhtml" />
+                             <p:menuitem value="Estadísticas" outcome="consultarExaminados.xhtml" />
+                             <p:menuitem value="Administrar Terminos" outcome="administrarTerminos.xhtml" />
+                             <p:menuitem value="Salir" action="#{loginControlador.logout()}" />
+                            
+                   </p:menu>
+                    
+                      </h:form>
+                  </p:layoutUnit >
+
+                <p:layoutUnit position="center">
+                    
+                    <f:metadata>
+                        <f:viewParam name="idTest" value="#{terminosBean.test.idTest}" />
+                        <f:viewParam name="rutExaminado" value="#{terminosBean.test.rutExaminado}" />
+                 <!--    <f:viewParam name="idRelato" value="#{terminosBean.idRelato}" />-->
+                        
+                      
+                    </f:metadata> 
+                    
+                
+                            <h:form id="formMostrar" class="form">
+                        
+                        <h3>Rectificar Terminos</h3>
+                        
+                        <br/>
+                        
+                        
+                        <c:forEach items="#{terminosBean.terminosTest}" var="item" varStatus="loop">     
+                            
+                            
+                         <h4>Relato #{loop.index+1}</h4>  
+                         <p:dataTable var="as" id="table#{loop.index}" value="#{item}" style="width: 70%"
+                         emptyMessage="No hay Terminos"
+paginator="true" rows="10" paginatorPosition="bottom"
+paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+
+                         >
+                
+                            <p:column headerText="Término " >
+                               <h:outputText value="#{as.palabra}"/>
+                </p:column>
+                           
+                           
+                            <p:column headerText="Clasificación" >
+                      
+                    <h:outputText value="#{terminosBean.clasificacion(as.connotacion)}"/>
+
+                                      
+                </p:column>
+                            
+                        
+                            
+                            <p:column headerText="Término Coincidencia" >
+                    <h:outputText value="#{as.terminoAsociado}"/>
+                </p:column>
+                            
+                        
+                            
+                             <p:column headerText="Editar" >
+                    <p:commandButton icon="ui-icon-pencil" onclick="PF('dlgmodificar').show();" update=":formModificar">
+                        <f:setPropertyActionListener target="#{terminosBean.terminoTemp2}" value="#{as}"/>
+                       
+                    </p:commandButton>
+                   
+                </p:column>
+                            
+                               <p:column headerText="Quitar">
+                    <p:commandButton icon="ui-icon-trash" 
+                        title="Delete this actor"
+                        actionListener="#{terminosBean.remove(as,loop.index)}" update=":formMostrar:table#{loop.index}"
+                        ajax="false" />
+                </p:column>
+                             
+                             <p:column headerText="Añadir a Termino existente">
+                    
+                    <p:commandButton  rendered="#{as.terminoAsociado eq '-'}" icon="ui-icon-plus" onclick="PF('dlgmodificar2').show();" update=":formModificar2">
+                        <f:setPropertyActionListener target="#{terminosBean.terminoTemp2}" value="#{as}"/>
+                         
+                        </p:commandButton>
+                    
+                    </p:column >
+                    
+                    <p:column  headerText="Añadir Nuevo Termino">
+                      <p:commandButton  rendered="#{as.terminoAsociado eq '-'}" icon="ui-icon-plus" onclick="PF('dlgmodificar3').show();" update=":formModificar3">
+                        <f:setPropertyActionListener target="#{terminosBean.terminoTemp2}" value="#{as}"/>
+                         
+                        </p:commandButton>        
+                          
+                    </p:column >   
+                         
+        
+                
+             
+                 
+                 
+                
+                </p:dataTable>
+                         <br/>
+                         
+                        </c:forEach>
+                        
+                          <br/>
+                        <h:commandButton value="Guardar y Ver Resultados" class="btn btn-primary" action="#{terminosBean.calcularMetricasTest()}"/>          
+                        
+                    
+                         </h:form>
+                        
+                         <br/>
+                </p:layoutUnit>
+
+            </p:layout>
+
+            
+             <p:dialog id="dlg" header="Modificar Connotación" showEffect="explode" hideEffect="bounce"
+                    widgetVar="dlgmodificar" modal="true" resizable="false" minWidth="200" >
+                   
+            <h:form id="formModificar">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Termino"/>
+                    <p:inputText value="#{terminosBean.terminoTemp2.palabra}" disabled="true" />
+                    
+                  <p:outputLabel value="Editar Connotación"/>
+                    
+                     <p:selectOneMenu id="tipoUser" effect="drop"
+                                      value="#{terminosBean.terminoTemp2.connotacion}" required="true">
+          <f:selectItem itemLabel="Elija connotacion" itemValue="-2" noSelectionOption="true"/>
+          <f:selectItem itemLabel="Negativo" itemValue="0" />
+          <f:selectItem itemLabel="Positivo" itemValue="1" />
+          <f:selectItem itemLabel="Neutro" itemValue="-1" />
+          
+   
+                 </p:selectOneMenu>
+                  
+              
+               
+                </p:panelGrid>
+                
+               
+          
+                
+
+                <p:commandButton actionListener="#{terminosBean.editarTermino(loop.index)}" value="Modificar" update=":formMostrar"
+                                 onclick="PF('dlgmodificar').hide();"/>
+            </h:form>
+       
+              
+                   
+        </p:dialog>
+            
+            
+            
+            
+            <p:dialog id="dlg2" header="Añadir a Termino Existente del Diccionario" showEffect="explode" hideEffect="bounce"
+                    widgetVar="dlgmodificar2" modal="true" resizable="false" minWidth="200" >
+                   
+            <h:form id="formModificar2">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Termino"/>
+                    <p:inputText value="#{terminosBean.terminoTemp2.palabra}" disabled="true" />
+                    
+                </p:panelGrid> 
+                
+
+                    
+                     <p:selectOneMenu  effect="drop"
+                                       value="#{terminosBean.terminoTemp2.terminoAsociado}" required="true">
+                         <f:selectItems value="#{adminTerminosBean.getTerminosLaminaId(terminosBean.terminoTemp2.idLámina)}"
+                                        var="examinados" itemLabel="#{examinados.termino}"
+                                        itemValue="#{examinados.termino}"  />
+
+                 </p:selectOneMenu>
+                
+               
+                
+                    
+                <p:commandButton actionListener="#{adminTerminosBean.añadirTerminoAsocDesdeRectificar(terminosBean.terminoTemp2)}" value="Añadir" update=":formMostrar"
+                                 onclick="PF('dlgmodificar2').hide();"/>  
+          
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </h:form>
+              </p:dialog>          
+            
+            
+            
+            
+              
+            <p:dialog id="dlg3" header="Añadir Nuevo Termino al Diccionario" showEffect="explode" hideEffect="bounce"
+                    widgetVar="dlgmodificar3" modal="true" resizable="false" minWidth="200" >
+                   
+            <h:form id="formModificar3">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Termino Actual"/>
+                    <p:inputText value="#{terminosBean.terminoTemp2.palabra}" disabled="true" />
+                    
+
+                    <p:outputLabel value="Nuevo Termino"/>
+                    <p:inputText value="#{terminosBean.terminoTemp2.terminoAsociado}"  />
+                    
+                    <p:outputLabel value="Connotacion"/>
+                     <p:selectOneMenu id="tipoUser" effect="drop"
+                                      value="#{terminosBean.terminoTemp2.connotacion}" required="true">
+          <f:selectItem itemLabel="Elija connotacion" itemValue="-2" noSelectionOption="true"/>
+          <f:selectItem itemLabel="Negativo" itemValue="0" />
+          <f:selectItem itemLabel="Positivo" itemValue="1" />
+          <f:selectItem itemLabel="Neutro" itemValue="-1" />
+          
+   
+                 </p:selectOneMenu>
+                    
+                </p:panelGrid> 
+      
+                <p:commandButton actionListener="#{adminTerminosBean.añadirNuevoTerminoDesdeRectificar(terminosBean.terminoTemp2)}" value="Añadir" update=":formMostrar"
+                                 onclick="PF('dlgmodificar3').hide();"/>  
+                
+            </h:form>
+              </p:dialog> 
+            
+            
+            
+        </h:body>
+
+    </f:view>
+</html>

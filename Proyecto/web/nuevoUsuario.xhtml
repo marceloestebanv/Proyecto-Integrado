@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                    <link href="/Proyecto/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="/Proyecto/resources/js/bootstrap.js" type="text/javascript"></script>
+       
+                
+                
+                <title>Nuevo Usuario</title>
+                
+                
+            </f:facet>
+            
+               <style type="text/css">
+            h1 {
+               display: block; 
+               text-align: center
+            }
+            
+               .form {
+     margin-left: 15%;
+    margin-right:15%;
+    
+     //si pongo esto me aparece la barra de scroll  width:100%;
+     
+ 
+     
+     
+    }
+    
+
+            
+            </style>
+            
+        </h:head>
+
+        <h:body>
+          
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north"   size="150"  collapsible="true" style="color: #888">
+            
+                    <h:panelGrid  columns ="3"  cellpadding="15" width="100%"  >
+            <p:graphicImage value="./resources/imagen/logo_uv.png" style="display:block;padding: 25px"/>
+            <h1> CAT-A</h1>
+            
+            <h:panelGrid   style="display: block;float: right;text-align: center " >
+            <p:graphicImage  value="./resources/imagen/images.jpg" width="30%"  />
+            <h:outputText value="#{loginControlador.usuario.nombre}" style="display: block;  text-align: center"  /> 
+            </h:panelGrid>
+            </h:panelGrid>
+                    
+                    
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="70" closable="true" collapsible="true">
+                 <h:outputText value=" Universidad de Valparaíso. 
+                   Todos los derechos reservados. 
+                   Chile - 2015"  style="padding: 1%; display: block;text-align: center"  /> 
+                 
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Menu" collapsible="true">
+                  
+                    <h:form >
+                    <p:menu>
+                       
+                            <p:menuitem value="Inicio"   outcome="./welcomePrimefaces.xhtml" /> 
+                            <p:menuitem value="Agregar Usuario" outcome="./nuevoUsuario.xhtml" />
+                            <p:menuitem value="Gestionar Cuenta" outcome="./gestionarUsuario.xhtml" />
+                            <p:menuitem value="Agregar Examinado" outcome="/CATPages/nuevoExaminado.xhtml" />
+                            <p:menuitem value="Agregar Test" outcome="/CATPages/ingresarTest.xhtml" />
+                             <p:menuitem value="Histórico de Test" outcome="/CATPages/gestionarTests.xhtml" />
+                             <p:menuitem value="Consultar Estadísticas" outcome="/CATPages/consultarExaminados.xhtml" />
+                             <p:menuitem value="Administrar Terminos" outcome="/CATPages/administrarTerminos.xhtml" />
+                            <p:menuitem value="Salir" action="#{loginControlador.logout()}" />
+                            
+                   </p:menu>
+                    
+                      </h:form>
+                    
+                    
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    
+                   
+                    <h:form id="formInsertar" class="form">
+                        
+                         <h2> Agregar Usuario </h2>
+                         <br/>
+                    
+                      <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                      <h:panelGrid columns="2" >
+                
+                <p:outputLabel for="rut" value="Rut del Usuario" />
+                <p:inputText id="rut" value="#{usuarioBean.usuario.rut}"   placeholder="Ej:18033150"/>
+              
+                
+                <p:outputLabel value="Nombre del Usuario"/>
+                <p:inputText value="#{usuarioBean.usuario.nombre}"  placeholder="Ingrese Nombre" />
+                
+                <p:outputLabel value="Contraseña del Usuario"/>
+                <p:inputText value="#{usuarioBean.usuario.password}"  placeholder="Ingrese Contraseña" />
+                
+                <p:outputLabel value="Correo del Usuario"/>
+                <p:inputText value="#{usuarioBean.usuario.correo}" placeholder="Ingrese Correo"/>
+               
+                <p:outputLabel value="Tipo de usuario"/>
+               
+                <p:selectOneMenu id="tipoUser" effect="drop"
+                                 value="#{usuarioBean.tipoUsuario}" required="true">
+          <f:selectItem itemLabel="Elija Tipo" itemValue="0" noSelectionOption="true"/>
+          <f:selectItem itemLabel="Psicólogo" itemValue="psico" />
+          <f:selectItem itemLabel="Asist. Social" itemValue="asist" />
+          
+    </p:selectOneMenu>
+               
+                
+   
+  
+             
+            </h:panelGrid>
+                        <br/>
+                        <h:commandButton actionListener="#{usuarioBean.insertar()}" class="btn btn-primary"  value="Ingresar Usuario" /> 
+        </h:form>
+        
+                </p:layoutUnit>
+
+            </p:layout>
+            
+            
+     
+           
+
+        </h:body>
+
+    </f:view>
+</html>
+

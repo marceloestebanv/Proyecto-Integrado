@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="26b8a41e-97c0-43b7-a4c3-a2f7289c98e8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="2378c3c0-d914-4510-8afd-00bd5ba9c688"/>
+	<parameter name="nombreEx" class="java.lang.String"/>
+	<parameter name="nombreUs" class="java.lang.String"/>
+	<parameter name="realPath" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<field name="relato" class="java.lang.String"/>
+	<field name="idRelato" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="91" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="140" height="48" uuid="29ce63c9-2e97-4d63-9506-65c1a6ca6809"/>
+				<imageExpression><![CDATA[$P{realPath}+"logo_uv.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="160" y="13" width="209" height="61" uuid="6741202a-595b-40b3-8132-2d6aa1878665"/>
+				<textElement>
+					<font size="30"/>
+				</textElement>
+				<text><![CDATA[Relatos Test]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="160" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT} == 1]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="75" y="11" width="408" height="135" forecolor="#CCCCCC" uuid="1f5241b2-6eec-41f3-8141-c4ecf31d1c2f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="93" y="21" width="162" height="20" uuid="837092bb-3ec1-4d9c-80bf-b47801ff668b"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información del test]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="279" y="61" width="100" height="20" uuid="8be860e3-6739-43bd-b3b3-c412c237e1d4"/>
+				<textFieldExpression><![CDATA[$P{nombreEx}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="81" width="100" height="20" uuid="8ffa0229-f475-4032-8612-e87f6df5818d"/>
+				<textFieldExpression><![CDATA[$P{nombreUs}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="93" y="61" width="138" height="20" uuid="fe02aa38-f2d4-4e73-84ac-ef2805f89fc1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Examinado :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="81" width="173" height="20" uuid="b6e914e2-e149-47d7-a553-83fa5ac75514"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nombre Usuario Examinador:  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="93" y="101" width="173" height="20" uuid="14b6c636-d4ea-440e-9fab-736831388246"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Test]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="279" y="101" width="100" height="20" uuid="114bf233-e2df-4fad-b1ce-a2cba5ce3e8b"/>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="242" splitType="Stretch">
+			<rectangle>
+				<reportElement x="22" y="41" width="508" height="201" forecolor="#CCCCCC" uuid="131223b8-4c9c-4bfd-8473-ae1469572d5f"/>
+			</rectangle>
+			<textField>
+				<reportElement x="119" y="61" width="398" height="181" uuid="4063b842-c2d7-4620-8292-c8731bd844d9"/>
+				<textFieldExpression><![CDATA[$F{relato}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="32" y="77" width="71" height="70" uuid="191e6dc6-9d7d-4749-bcda-2ff9cd82eab5"/>
+				<imageExpression><![CDATA[$P{realPath}+$V{REPORT_COUNT}+".jpg"]]></imageExpression>
+			</image>
+			<rectangle>
+				<reportElement x="75" y="11" width="142" height="40" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="f7fb68b2-26ae-405b-ab95-6cd42197435e"/>
+			</rectangle>
+			<textField>
+				<reportElement x="136" y="21" width="100" height="30" forecolor="#000000" uuid="6ed55942-db5c-41e7-99e7-58a267f0e936"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idRelato}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="86" y="21" width="100" height="30" forecolor="#000000" uuid="e59bf084-98f8-4a43-8289-2528daa6595e"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relato]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="160" y="16" width="100" height="20" uuid="d85c1322-1c3f-4da4-80af-a037441940f6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="22" y="16" width="138" height="20" uuid="54d39e4b-a078-4cc2-a786-ae7bf2b33054"/>
+				<text><![CDATA[reporte generado con fecha:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="420" y="16" width="80" height="20" uuid="7a479171-ac19-4c20-864f-12dfa30ee080"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="500" y="16" width="40" height="20" uuid="e7f5bf83-7c80-4046-b02b-5db7c1e9cfa6"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<line>
+				<reportElement x="397" y="15" width="100" height="1" uuid="d4a2c4e4-4cd1-4105-9b84-bccce67c3a9d"/>
+			</line>
+			<staticText>
+				<reportElement x="430" y="16" width="100" height="20" uuid="76215555-8220-4696-8a74-4564b58d34da"/>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

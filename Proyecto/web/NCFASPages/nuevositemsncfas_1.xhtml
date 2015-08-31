@@ -1,0 +1,2082 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+        <f:facet name="first">
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="/Proyecto/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/docs.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/newcss.css" rel="stylesheet" type="text/css"/>
+</f:facet>
+</h:head>
+<h:body>
+    
+    <div class="row" id="logo">
+         <img src="/Proyecto/resources/imagen/logofamilia.png" alt=""/>
+</div>
+    
+    <div class="row" id="h1titulo">
+         <h1 >
+             PPF Aitué
+         </h1>
+</div>
+
+           
+<div class="col-md-12" style="background-color: #F5F5F5;padding: 20px;">
+<div class="col-md-3"><img src="/Proyecto/resources/imagen/logo_uv.png" alt=""/>
+</div>
+<div class="span6 pull-right">
+<div class="hidden-xs">
+<img src="/Proyecto/resources/imagen/header_decom.png" alt=""/>
+</div>
+</div>
+</div>
+    
+    
+    
+    
+<div class="row">
+    <p:growl autoUpdate="true"/>
+    <div class="col-md-3" style="margin: 10px">
+    <h:form>
+    <p:panelMenu style="width:300px">
+        <p:submenu label="Gestionar NCFAS">
+            <p:menuitem value="Ingresar un Nuevo NCFAS" actionListener="#{menuBeanAdministrador.ingresoNcfas}" icon="ui-icon-disk" />
+            <p:menuitem value="Ver NCFAS guardados"  actionListener="#{menuBeanAdministrador.verncfas}" icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Ver NCFAS de tipo Inical"  actionListener="#{menuBeanAdministrador.verNcfasIniciales}" icon="ui-icon-arrowrefresh-1-w" />   
+            <p:menuitem value="Ver NCFAS de tipo Final"  actionListener="#{menuBeanAdministrador.verNcfasFinales}" icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Ver NCFAS por Fecha"  actionListener="#{menuBeanAdministrador.verNcfasPorFecha}" icon="ui-icon-arrowrefresh-1-w" />
+        
+        </p:submenu>
+        
+        <p:submenu label="Módulo Minería de Datos">
+            <p:menuitem value="Generar Minería" actionListener="#{menuBeanAdministrador.mineriadedatos}" icon="ui-icon-wrench"/>
+        </p:submenu>
+        
+        <p:submenu label="Módulo Estadística Desciptiva">
+            <p:menuitem value="Ver Gráfico Seleccionando NCFAS" actionListener="#{menuBeanAdministrador.estadistica}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de Items " actionListener="#{menuBeanAdministrador.comparar}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de Items Generales" actionListener="#{menuBeanAdministrador.comparar2}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de fecha de Inicio y fecha Final" actionListener="#{menuBeanAdministrador.comparar3}" icon="ui-icon-bookmark"/>
+        </p:submenu>
+    </p:panelMenu>
+
+         <p:panelGrid columns="2">
+    <f:facet name="header">
+        <img src="/Proyecto/resources/imagen/mujer.png" alt=""/>
+    </f:facet>
+ 
+    <h:outputText value="Nombre:" />
+    <h:outputText value="#{mbsesionBean.nombreusuario}" />
+ 
+    <h:outputText value="Tipo:" />
+    <h:outputText value="Administrador" />
+ 
+</p:panelGrid>
+<h:commandButton id="salir" class="btn btn-info" value="Salir" action="#{usuarioBean.logout()}" />
+</h:form> 
+</div>
+
+    
+<p:dialog id="dlg" header="Mensaje" showEffect="explode" hideEffect="bounce" widgetVar="dlgok" modal="true" resizable="false" minWidth="200">
+                <h:form id="formVer">          
+                    <p:commandButton value="Datos guardados correctamente!"  onclick="PF('dlgok').hide();"/>                                                  
+                </h:form>
+        </p:dialog>
+    
+    
+  
+    <p:dialog id="dlg2" header="Estabilidad de la Vivienda" widgetVar="dlgestab" modal="true" resizable="false" width="620px" minWidth="200"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a una familia ocupando la misma vivienda adecuada por más de tres años. Si es menos de tres años, el traslado es probocado por un cambio de trabajo o una mudanza a una vivienda mejor,etc. La renta/hipoteca se paga a tiempo. No hay problemas en cumplir las obligaciones financieras de renta o hipoteca.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                <p>Se refiere a una familia experimentando, o que previamente ha experimentado, problemas menores para permanecer en la misma residencia, pero la familia es relativamente capaz de cumplir con las obligaciones financieras, la vivienda actual no está amenzada y los miembros de la familia no están limitados para responder a otras obligaciones debido a estos problemas.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                <p>Se refiere a una familia que está siendo amenzada con el desalojo. Incapaz de cumplir con sus obligaciones de renta o hipoteca a tiempo, o del todo. O, la familia no tiene vivienda, está viviendo con diferenes parientes o amigos, o está viviendo en un refugio de indigentes. La familia no está satisfecha con su situación de vivienda.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgestab').hide();"/>  
+    </h:form>                
+</p:dialog>    
+    
+    <p:dialog id="dlg3" header="Seguridad en la comunidad" widgetVar="dlgseg" modal="true" resizable="false" width="620px" minWidth="200"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a un vecindario seguro y a salvo para los niños. Los cuidadores pueden permitir a los niños jugar afuera sin miedo. Los vecinos se cuidan unos a los otros (p.ej., los vecinos "vigilan").</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                <p>Se refiere a disturbios menores en el vecindario, pero los disturbios no evitan que los miembros de la familia y los niños pasen tiempo afuera en la comunidad.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                <p>Se refiere a muchos disturbios tales como peleas y/o revueltas en el vecindario. El vecindario no es seguro para que los niños jueguen al aire libre o para que caminen al bus o a la escuela. Evidencia de violencia, ventanas clausuradas o enrejadas, armas de fuego, uso de alcohol o drogras y/o tráfico de drogas en el vecindario. Vecinos temerosos de "verse involucrados".</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgseg').hide();"/>  
+    </h:form>                
+</p:dialog>  
+    
+    <p:dialog id="dlg4" header="Riesgos del Entorno" widgetVar="dlgriesg" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a as circunstancias de la vida y vecindario de la familia como estando esencialmente libres de riesgos ambientales, tales como químicos tóxicos, gasses industriales o basura, pintura o cañerías de plomo, plagas de alimañas, moho, alta congestión de tráfico, construcción o demolición de edificios cercanos o riesgos similares. Los cuidadores reconocen los riesgos ambientales y buscan medios para proteger a los niños y a la familia.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a las circunstancias de la vida y vecindario de la familia como estando ampliamente libres de riesgos ambientales conocidos. Algunos riesgos ambientales pueden estar presentes, pero los cuidadores parecen reconocer esos riesgos y está tomando los pasos apropiados para proteger a los niños y la familia. Los cuiddores pueden o no ser conscientes de todos los riesgos potenciales, pero generalmente toman las medidas adecuadas para reducir los riesgos.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p> Las circunstancias de la vida y vecindario de la familia están cargadas de riesgos ambientales. Ratas, cucarachas y otras alimañas están presentas, y hay basurales cercanos. Los niños o miembros de la familia pueden sufrir asma debido a gases o desperdicios industriales. Edificios abandonados, destruidos o edificios bajo construcción, ponen en riesgo a los niños mientras juegan. Las áreas de juego de los niños no están suficientemente protegidas del tráfico y otros riesgos. Pinturas o cañerías de plomo presentan un serio riesgo de ingestión de metales. Los cuidadores no muestran voluntad o capacidad para detectar o reconocer riesgos, y no toman las medidas adecuadas para remediar o proteger a los niños y la familia.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgriesg').hide();"/>  
+    </h:form>                
+</p:dialog> 
+    
+    <p:dialog id="dlg5" header="Habitavilidad de la Vivienda" widgetVar="dlghab" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a una familia y a los vecinos experimentando su hogar como "cálido". La casa es muy amplia y ordenada. Abundante espacio y privacidad para los niños. Numerosos muebles en buen estado. Se consideran y toman precaciones de seguridad, tales como el uso de alarmas de humo y cerrojos fijos en las puertas exteriores. Los objetos venenosos se mantienen bajo llave y fuera del alcance de los niños. La plomería está en buen estado.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p> Se refiere a mínimos problemas en el hogar, tales como leve hacinamiento o algo de aglomeración de objetos. Sin embargo, se toman la mayoría de las precacuiones de seguirdad(p.ej., los venenos están fuera de la vista, pero no bajo llave). Puede ser evidente la necesidad de reparaciones pequeñas en la casa(p.ej., yeso desmoronado), pero éstas no requieren de atención inmediata.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p> Se refiere a situaciones de insalubridad, incluyendo basura, desorden, y/o olores dessagradables en la casa. Trozos de comida y/o comida pudriéndose en los mostradores y mesas. Muebles empapados o manchados de orina, pañales sucios, platos sucios, inundación de basura, y/o heces humanas o animales en el piso. Hay obstáculos para sentarse o entrar en la casa. Plomería no funcionando y/o sin electricidad. Muchos peligros dentro del alcance de los niños, talse como pistolas, cuchillos, drogras, o medicamentos abiertos y venenosos.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlghab').hide();"/>  
+    </h:form>                
+</p:dialog> 
+    
+    <p:dialog id="dlg6" header="Higiene Personal" widgetVar="dlghig" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a los niños viéndose limpios y bien arreglados. Los niños tienen abundante ropa, apropiada a la estación. Los adultos se ven aseados y bien arreglados. Los adultos tienen abundante ropa, apropiada a la estación. Conciencia de la higiene personal y el aseo. Tienen orgullo de sí mismos.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p> Se refiere a los niños ocasionalmente vistiendo ropa inapropiada o mostrándose desarreglados. Sin embargo, la apariencia o ropa inapropiada no causan problemas para la familia o los niños.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a una constante apariencia desarreglada o sucida en los niños. Apariencia desarreglada de los adultos. La higene personal es notoriamente pobre, la higiene dental es evidentemente probre, y/o se percibe hedor corporal. Falta de conciencia en niños y adultos sobre la higiene personal y aseo. El vestuario es inapropiado para la estación.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlghig').hide();"/>  
+    </h:form>                
+</p:dialog> 
+    
+    <p:dialog id="dlg7" header="Entorno de Aprendizaje" widgetVar="dlgapren" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p> Se refiere al entusiasmo de los cuidadores por enseñar a los niños. La familia tiene rutinas para el juego y el estudio. El tiempo está planificado para la lectura, ir a excursiones, y actividades estructuradas. Los cuidadores se involucran activamente en la esuela, y ayudan a los niños en sus tareas del desarrollo. Se provee de juegos y juguetes apropiados para la edad, y son evidenes en la casa (p.ej., las tareas escolares se exhiben). Los cuidadores son apoyadores del personal escolar.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p> Se refiere a los cuidadores planficando ocacionalmente tiempo para actividades de aprendizaje. Los cuidadores no buscan activamente involucrarse con la escuela del niño, pero se hacen el tiempo según se les solicite.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p> Se refiere a la falta de atención de los cuidadores o a la obstaculización de las tareas del desarrollo de los niños, y a un bajo involucramiento con la escuela de los niños. Los cuidadores no valoran la educación, y están frustrados y enojados con las necesidades de aprendizaje de los niños. No hay oportunidades de aprendizaje en el hogar. Juegos y juguetes ausentes y/o no son apropiados para la edad. Los cuiadores no son cooperativos con el personal escolar, o son desdeñosos de las escuelas y profesores públicos.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgapren').hide();"/>  
+    </h:form>                
+</p:dialog>
+    
+<p:dialog id="dlg8" header="Entorno en General" widgetVar="dlgeng" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiera a una familia recibiendo puntajes muy altos en las siguientes áreas: estabilidad de la vivienda, seguridad en la comunidad, riesgos del entorno, higiene personal y entorno de aprendizaje.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a una familia experimentando problemas mínimos en las siguientes áreas: estabilidad de la vivienda, seguridad en la comunidad, riesgos del entorno, higiene personal y entorno de aprendizaje. Sin embargo, los problemas no interfieren con la habilidad de la familia para funcionar, y los problemas no necesitan ser abordados.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a una familia recibiendo puntajes muy bajos en las siguientes áreas: estabilidad de la vivienda, seguridad en la comunidad, riesgos del entorno, higiene personal y entorno de aprendizaje.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgeng').hide();"/>  
+    </h:form>                
+</p:dialog>    
+    
+ <!--Acá comienza otra dimensión -->   
+ 
+    <p:dialog id="dlg9" header="Supervisión del Niño(s)" widgetVar="dlgsup" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a la entrega de los cuidadores de una supervisión apropiada para la edad, como fijar límites para las actividades basado en la edad del niño. El cuidador es preocupado y atento a las necesidades del niño al seleccionar cuidadores substitutos (niñera, vecino). Se asegura que el niño se sienta confortable y seguro on el cuidador substituto. Mantiene un seguimiento de los niños y conoce a los amigos de los niños.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere al cuidador entregando una supervisión satisfactoria de los niños. Se colocan algunos límites a las actividades basado en la edad del niño. Se da alguna onsideración a la selección de cuidadores substitutos, y hay alguna preocupación al respecto a la comodidad de los niños con el cuidador substituto. Tiene algún conocimiento básico de la ubicación de los niños, y tiene un conocimiento básico de los amigos del niño.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a la falta en el cuidador de adecuada supervisión para la edad, o de ninguna supervisión. No se fijan límites en las actividades de los niños, o se fijan inconsientemente. Se observa muy poca o ninguna consideración a la selección de cuidadores substitutos(p. ej., extraños, abusadores conocidos, personas bajo la influencia de drogras, alcohol). No piensa sobre la comodidad y senimiento de seguridad de los niños con el cuidador substituto. Los amigos de los niños no son conocidos, y habitualmente no se sabe la ubicación de los niños.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgsup').hide();"/>  
+    </h:form>                
+</p:dialog>  
+    
+    <p:dialog id="dlg10" header="Prácticas Disciplinarias" widgetVar="dlgpdisc" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a la habilidad de los cidadores para proveer disciplina adecuada a la edad, no puntuativa y consiente. san refuerzo positivo, y tratan de educar a los niños a través de una apropiada disciplina. Muestran buenos modelos de roles. Los cuidadores acuerdan el estilo parental y se apoyan el uno al otro.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a la adecuada entrega de disciplina y guía para los niños en los cuidadores. Ocacionalmente la disciplina es inadecuada a la edad, demasiado severa o demasiado indulgente, pero las inconsistencias no crean mayores problemas entre el niño y los cuidadores.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a la falta de disciplina en los cuidadores, o a abuso emocional o físico pasado o actual referido como "disciplina". La disciplina es excesiva, punitiva, inapropiada a la edad, inonsiente y/o ausente. Presentan modelos de roles pobres. Los cuidadores están en desacuerdo sobre las esrategias de parentalidad y presentan mensajes mixtos al niño.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgpdisc').hide();"/>  
+    </h:form>                
+</p:dialog>  
+    
+    <p:dialog id="dlg11" header="Entrega de Oportunidades de Desarrollo/Enriquecimiento" widgetVar="dlgende" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a la estimulación del cuidador(es) de oportunidades tales como deportes, lecciones musicales, y/o visitas a museos y/o parques. Los cuidadores no "presionan" a los niños a involucrarse. Los cuidadores están involucrados activamente proveyendo transporte, equipos de entrenamiento y/o practicando en comités consutivos.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere al apoyo del cuidador(es) de oportunidades para los nios tales como deportes, lecciones musicales y/o salidas a terreno, pero los cuidadores no están activamente involucrados o están involucrados esporádicamente en apoyar estas actividades.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a la falta de apoyo o sobre-involucramiento del cuidador(es) en oportunidades para los niños tales como deportes, lecciones musicales y/o salidas a terreno. Los cuidadores no estimulan ni desincentivan el involucramiento de los niños en estas actividades. O, por el contrario, los cuidadores "presionan" a los niños, no sólo a involucrarse, sino a sobresalir en las actividades, y son demandantes respecto al progreso de sus niños. </p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgende').hide();"/>  
+    </h:form>                
+</p:dialog>  
+    
+    <p:dialog id="dlg12" header="Uso de Drogras/Alcohol que Interfiere cn la Parentalidad" widgetVar="dlguso" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere al uso de los cuidadores, actual o pasado, de drogras/alcohol. El cuidador no usa drogras/alcohol, o usa alcohol apropiadamente. El cuidador no usa drogras ilegales, y activamente desincentiva el uso de drogras/alcohol en los niños. El uso moderado, si está presenta, no daña su habilidad parental.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere al uso de los cuidadores, actual o pasado, de drogras/alcohol. Generalmente usa alcogol apropiadamente. El uso de drogras/alcohol no daña significativamente la habilidad del cuidador para supervisar o criar a los niños. </p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a problemas de abuso de alcohol/substancias, actuales y/o pasados, en los cuidadores, que afectan negativamente su habilidad para criar niños. Los cuidadores están frecuentemente no disponibles para cuidar o supervisar a los niños debido al uso de drogras/alcohol El cuidador proyecta sus problemas personales en los niños u otros miembros del hogar; los culpa por su necesidad de beber alcohol o usar otras drogras.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlguso').hide();"/>  
+    </h:form>                
+</p:dialog>  
+    
+    <p:dialog id="dlg13" header="Estimuación Parental de la Educación del Niño(s)" widgetVar="dlgestim" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a la estumulación activa de los cuidadores de metas educativas. Los cuidadores aseguran la asisstencia regular a la escuela y aseguran que los niños hagan sus tareas y estén bien preparados. Los cuidadores monitorean la participación y progreso de los niños en la escuela; atienden voluntariamente a las conferencias padre/profesor.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a la consciencia en el cuidador de la necesidad de educación. Los cuidadores van a las reuniones padre/profesor, pero no pueden ser pasivos. Hacen algunos intentos para llevar a los niños regularmente a la escuela, y reprenden a los niños para que hagan sus tareas, pero pueden no estar dispuestos o disponibles para apoyar acivamente las tareas o actividades relacionadas con la escuela.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere al desdén de los cuidadores por la educación. Puede reflejar la historia personal negativa del cuidador con la escuela. Los cuidadores no monitorean el desempeño escolar, no asisten a las reunones, culpan a la escuela por los problemas académicos o conductuales de sus hijos; pueden amenazar a los profesores o administradores escolares. Pueden motivar a los niños a dejar la escuela prematuramente para trabajar.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgestim').hide();"/>  
+    </h:form>                
+</p:dialog>  
+    
+    <p:dialog id="dlg14" header="Control de Acceso a Materiales Mediáticos/de Lectura" widgetVar="dlgctrl" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a los cuidadores monitoreando activa y consientemente el uso de los niñños de la televisión, música, videos, videojuegos y computadora(Internet). Los cuidadores están atentos por si aparece material violento o sexualmente explícito, según sea apropiado para la edad, discutiendo el contenido mediático con los niños, y el riesgo de usuarios predadores de Internet y de sitios de chateo,</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a los cuidadores intentando controlar el acceso a los medios y contenidos, y a su consciencia de la necesidad de proteger a los niños de materiales vilolentos o sexualmente explicítos. Los niños pueden adquirir ocasionalente tales programas, o los cuidadores pueden disfrutar dichos programas y no siempre tienen éxito en limitar acceso de los niños.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a la falta de conciencia o disposición de los cuidadores a monitorear el contenido mediático de los niños. Los cuidadores pueden motivar a los niños a ver ponografía o películas extremadamente violentas o videojuegos sin discusón de sus implicancias legales, morales o éticas. Los cuidadores glorifican personajes o conductas infames en videos, o motivan a los niños a emular a esos personajes o imitar malas conductas. Los niños entran a los sitios de chateo indiscriminadamente.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgctrl').hide();"/>  
+    </h:form>                
+</p:dialog>  
+    
+    <p:dialog id="dlg15" header="Literacidad del Progenitor(es)" widgetVar="dlglit" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a la integración por parte del cuidador de la lecutra y escritura en la vida cotidiana familiar. Los materiales de lectura son evidentes en la casa. Los cuidadores y niños se comunican con notas cuando es apropiado. Si el Español no es el lenguaje primario de la familia, los cuidadores pueden comunicarse lo suficientemente bien para cumplir con las necesidades de su vida cotidiana, o viven en una comnidad étnica de tal tamño, que la comunicación transcultural no afecta adversamente la vida familiar.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a los cuidadores teniendo habilidades literarias básicas. Pueden leer cuando es necesario, a un nivel que no inhibe la vida familiar normal. Los cuidadores pueden no leer por placer y pueden no motivar a los niños a leer regularmente, pero reconocen la necesidad de literatura.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a la falta de literacidad de los cuidadores. Los cuidadores no pueden leer o escribir en español, o si el español no es su lenguaje primario, presentan falta de literacidad en el lenguaje de su cultura nativa. Los cuidadores no pueden leer información necesaria, tal como instrucciones de cuidados médicos o frascos de medicamentos; no leen suficientemente bien como para seguir direcciones escritas, o comprar económica o efectivamente. La familia puede ser víctima de crímenes que se basan en la falta de literacidad(contratos falsos, etc).</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlglit').hide();"/>  
+    </h:form>                
+</p:dialog>  
+ 
+
+    
+    <p:dialog id="dlg16" header="Competencias Parentales en General" widgetVar="dlgcompeg" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a una familia recibiendo puntajes muy altos en las siguientes áreas: supervisión de los niños, prácticas disciplinarias, entrega de oportunidades de desarrollo/enriquecimiento, salud mental o física, salud mental o físcia, uso de drogras/alcohol, estimulación parental de la educación del niño(s), control del acceso a materiales mediáticos/de lectura, y literacidad del progenitor.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a una familia experimentando algunos problemas en las siguientes áreas: supervisión de los niños, prácticas disciplinarias, entrega de oportunidades de desarrollo/enriquecimiento, salud mental o física, salud mental o físcia, uso de drogras/alcohol, estimulación parental de la educación del niño(s), control del acceso a materiales mediáticos/de lectura, y literacidad del progenitor. Sin embargo, los problemas no representan dificultades serias para los miembros de la familia.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiera a una familia recibiendo puntajes muy bajos en las siguientes áreas: supervisión de los niños, prácticas disciplinarias, entrega de oportunidades de desarrollo/enriquecimiento, salud mental o física, salud mental o físcia, uso de drogras/alcohol, estimulación parental de la educación del niño(s), control del acceso a materiales mediáticos/de lectura, y literacidad del progenitor.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgcompeg').hide();"/>  
+    </h:form>                
+</p:dialog>  
+ 
+  <!-- aca viene otra dimensión -->
+ 
+ <p:dialog id="dlg17" header="Interacciones Familiares en General" widgetVar="dlgintg" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a una familia recibiendo puntajes muy altos en las siguientes áreas: apego con el niño(s); comunicación con el niño(s); expectativas sobre el niño(s); apoyo mutuo dentro de la familia; relación entre los progenitores; rutinas y rituales familiares; recreación y juego familiar.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a una familia recibiend puntajes de "adecuado" en las siguientes áreas: apego con el niño(s); comunicación con el niño(s); expectativas sobre el niño(s); apoyo mutuo dentro de la familia; relación entre los progenitores; rutinas y rituales familiares; recreación y juego familiar.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiera a una familia recibiendo puntajes muy bajos en las siguientes áreas: apego con el niño(s); comunicación con el niño(s); expectativas sobre el niño(s); apoyo mutuo dentro de la familia; relación entre los progenitores; rutinas y rituales familiares; recreación y juego familiar.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgintg').hide();"/>  
+    </h:form>                
+</p:dialog> 
+ 
+ <p:dialog id="dlg18" header="Apego con el Niño(s)" widgetVar="dlgapegn" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a la proximidad saludable del cuidador con su hijo y a su habilidad para criar un niño. Los cuidadores estimulan la apropiada independencia del niño y dan amor y atención gratuitaente al niño(a). Responden apropiadamente a las necesidades del niño y tienen un sentimiento de apego con el niño(a).</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a la proximidad saludable del cuidador con su hijo y a su habilidad para estar cerca de su hijo. Lo cuidadores no estimulan abiertamente la independencia en sus niños, y pueden no dar afecto abiertamente al niño(a). Sin embargo, las necesidades del niño parecen estar cubiertas.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a la inhabilidad de los cuidadores para formar una relación cercana con sus niños, e incompetencia para criarlos. Los cuidadores están resentidos, rechazantes o desvinculados con sus hijos. También se refiere a la falta de respuesta, respuesta inapropiada o involucramiento excesivo con el niño(a). </p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgapegn').hide();"/>  
+    </h:form>                
+</p:dialog> 
+ 
+ <p:dialog id="dlg19" header="Comunicación con el Niño(s)" widgetVar="dlgccomn" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere al uso del cuidador de comunicación afectuosa y apropiada a la edad de los niños. La comunicaión no verbal con infantes es tranquila y tierna; la elección de palabras y el volumen de voz es apropiado para la etapa de desarrollo de los niños. Incluso estando enojados, los cuidadores mantienen control de su voz y cuerpo, y se comunican efectivamente. La comunicación verbal frecuente se acompaña de contacto físico afectuoso (ej., toca, abrazar).</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a la habilidad básica de los cuidadores para comunicarse efectivamente verbal y no verbalmente con los niños. Los cuidadores pueden levantar la voz, imponerse sobre los niños, dar severos sermons cuando están enojados. Los cuidadores pueden expresar frustración de que los niños no escuchan, cuando la comprensión o el estilo de comunicación pede ser un tema. Sin embargo, los niños no están en riesgo, y la intervención no está justificada.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a la incapacidad de los cuidadores para comunicarse efectivamente con los niños. La comunicación es infrecuente o ausente, o constante y abrumadora; frecuentemente acusatoria en tono y contenido. Arrebatos físicos y verbales pueden ocurrir frecuentemente. Se da poca o ninguna consideración al nivel de desarrollo de los niños y su habilidad para procesar y comprender la comunicación. Los cuidadores culpan a los niños por la pobre comunicación.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgccomn').hide();"/>  
+    </h:form>                
+</p:dialog> 
+ 
+ <p:dialog id="dlg20" header="Expectativas con el Niño(s)" widgetVar="dlgexpn" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere al cuidador teniendo expectativas apropiadas a la edad del niño, y expectativas claras del niño. Está sobre el promedio en la comprensión del desarrollo cognitivo, físico, social y emocional del niño.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a las expectativas del cuidador sobre el niño como mayormente apropiadas a su edad. Los cuidadores parecen tener una comprensión promedio de las necesidades de desarrollo del niño, pero este entendimiento no justifica intervenir.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere al cuidadore teniendo expectativas no realistas y confusas para el niño. No tolera errores en el niño. Se espera que el niño asuma las responsabilidades del adulto (p.ej., "parentalizado"). O, no se le permite al niño involucrarse en comportamientos adecuados para su edad (p.ej., deportes, citas). Hay poco o inapropiado entendimiento del desarrollo normal infantil.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgexpn').hide();"/>  
+    </h:form>                
+</p:dialog> 
+ 
+ <p:dialog id="dlg21" header="Apoyo Mutuo dentro de la Familia" widgetVar="dlgapoyom" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a un excelente apoyo emocional y/o "físico" dentro de la familia. Se da apoyo "físico" cuando se necesita, tales como proveer cuidados diarios, transporte o ayuda financiera. Los miembros de la familia parecen ayudarse unos a otros voluntariamente.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a un buen apoyo dentro de la familia. Algo de apoyo físico se entrega cuando lo solicita un miembro de la familia. La mayoría de las peticiones de ayuda de los miembros de la familia son cubiertas por otros miembros de la familia. </p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a un apoyo emocional o apoyo "físico" pobre o ausente entre los miembros de la familia. La familia no provee de transporte, cuidados diarios, o ayuda financiera cuando se necesita. Se socavan los unos a los otros en la familia. Los miembros de la familia no toleran el éxito de otros miembros de la familia. </p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgapoyom').hide();"/>  
+    </h:form>                
+</p:dialog> 
+ 
+ <p:dialog id="dlg22" header="Relación entre los Progenitores / Cuidadores" widgetVar="dlgrelentrep" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <p> Nota: Este ítem puede no ser aplicable a todos los casos. Por ejemplo, si hubiese solo un cuidador involucrado, y no hubiera otro significativos. Si este es el caso, encierre N/A en la forma.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a una relación entre los cuidadores, evaluada como estable, consiente, efectiva y cariñosa. La pareja es capaz de comunicarse claramente y estimularse uno al otro. La pareja mantiene una "separación" con los niños.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a la relación entre los cuidadores. Algunos conflictos son evidentes, pero no parecen estar llevando al divorcio, la separación o el abandono. Hay algunas dificultades menores en la comunicación pero no dañan significativamente la relación.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a una relación entre los cidadores no apoyadora e inestable. Hay dificultades de comunicación importantes, con evidencia de discrodia, violencia o indiferencia. El divorcio, la separación o el abandono son temas destacados. Los vínculos no se mantienen claramente entre los cónyuges, o entre la pareja y los niños.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgrelentrep').hide();"/>  
+    </h:form>                
+</p:dialog> 
+ 
+ <p:dialog id="dlg23" header="Rutinas y Rituales Familiares" widgetVar="dlgrutyrit" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere al uso de los cuidadores de rutinas diarias para facilitar las aactividades familiares al comienzo y final del día. Puede involucrar higiene, tareas de alimentación, preparación para el trabajo/cuidado infantil. Entregan estructura y expectativas tanto para los cuidadores como para el niño. Hay flexibilidad para ocaciones especiales. Los niños participan en formas apropiadas para su edad. Hay observación regular por la familia de rituales que pueden incluir cumpleaños y expresiones de fe en feriados religiosos. Los rituales fomentan un sentido de seguridad y pertenencia en los niños.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Existen actividades y rutinas familiares regulares que generalmente sirven para satisfacer las necesidades cotidianas de la familia. Las rutinas pueden quebrarse o llegar a ser muy rígidas, convirtiéndose en obstáculos más que en ayyudas para aliviar la vida familiar. La familia celebra algunos rituales, pero puede no integrar prácticas observantes en su vida cotidiana. Los niños son usualmente incluidos en los rituales, pero pueden no tener un rol activo en las prácticas. Se observa un sentido básico de seguridad y pertenencia.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere tanto a una ausencia de rutinas, que lleva al caos en la familia y luchas diarias para comenzar o terminar las actividades del día, como rutinas tan rígidas e inflexibles que los miembos de la familia pueden llegar a estar resentidos o rebeldes. La observancia de cumpleaños y otros días o eventos importantes es esporádica e inconsiente. La falta de rituales lleva a sentimientos de exclusión en los niños. Hay participación en rituales que no son apropiados para la edad, o son violentos, llevando a conductas temerosas o violentas en los niños. </p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgrutyrit').hide();"/>  
+    </h:form>                
+</p:dialog> 
+ 
+ <p:dialog id="dlg24" header="Recreación y Juego Familiar" widgetVar="dlgcrecyju" modal="true" resizable="true" width="980px"  >
+    <h:form>
+        <div class="row">
+            <div class="col-md-4" >
+                <p> +2 Clara Fortaleza </p>
+            </div>
+            <div class="col-md-8" >
+                <p>Se refiere a la familia teniendo un tiempo regular para la recreación o el juego juntos. Puede involucrar deportes, picnics, salidas al parque/zoológico, campings, o juegos de tablero, cartas, puzles, etc. La planificaión de la recreación toma en cuenta las necesidades y deseos de todos los miembros de la familia y las actividades son apropiadas para la edad. La recreación está equilibrada con el trabajo y con las actividades del hogar; estimula relaciones familiares saludables.</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4" >
+                <p> 0 Línea Base/Adecuado </p>
+                </div>              
+                <div class="col-md-8 " >
+                    <p>Se refiere a la familia teniendo algún tiempo de recreación en conjunto. La recreación o el juego pueden estar levemente desequilibrado con el trabajo o los deberes del hogar, pero el desequilibrio no afecta adversamente el cumplimiento de las necesidades familiares básicas, y las relaciones familiares son básicamene saludables.</p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-4" >
+                <p> -3 Problema Serio </p>
+                </div>              
+                <div class="col-md-8" >
+                    <p>Se refiere a la familia no teniendo tiempos de recreación o juego en conjunto, como tiempo de recreción que está totalmente acomodado a las necesidades de los adultos, o que es claramente inapropiado para niños. La recreación o el juego está claramente desequilibrado con el trabajo o los deberes: o bien no hay salidas recreativas, o la recreación se hace a expensas de cumplir con las necesidades familiares básicas.</p>
+                </div>
+            </div>
+        <p:commandButton value="Ok"  onclick="PF('dlgcrecyju').hide();"/>  
+    </h:form>                
+</p:dialog>            
+<div class="col-md-7">
+    
+        
+            
+             <p:fieldset legend="Ingrese valores a las dimensiones del NCFAS" >             
+             <h:form>        
+            <p:accordionPanel multiple="true">
+            <p:tab title="ENTORNO">
+          
+            <div clas="row">
+            <div class="col-md-6">
+                <p:commandLink   value="Estabilidad de la vivienda" onclick="PF('dlgestab').show();" /> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores1" value="#{itemBean.valores[1]}" >   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+           
+            <div clas="row">
+            <div class="col-md-6">
+            
+                <p:commandLink   value="Seguridad en la comunidad" onclick="PF('dlgseg').show();" /> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores2" value="#{itemBean.valores[2]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            
+            <div clas="row">
+            <div class="col-md-6">
+            
+                <p:commandLink  value="Riesgos del entorno" onclick="PF('dlgriesg').show();" /> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores3" value="#{itemBean.valores[3]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            
+            <div clas="row">
+            <div class="col-md-6">
+            
+                <p:commandLink   value="Habitabilidad de la vivienda" onclick="PF('dlghab').show();" /> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores4" value="#{itemBean.valores[4]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            
+            <div clas="row">
+            <div class="col-md-6">
+            
+                <p:commandLink   value="Higiene personal" onclick="PF('dlghig').show();"/> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores5" value="#{itemBean.valores[5]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            
+            <div clas="row">
+            <div class="col-md-6">
+            
+                <p:commandLink   value="Entorno de aprendizaje" onclick="PF('dlgapren').show();" /> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores6" value="#{itemBean.valores[6]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            
+            <div clas="row">
+            <div class="col-md-6">
+            
+                <p:commandLink   value="Entorno en General" onclick="PF('dlgeng').show();"/> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores7" value="#{itemBean.valores[7]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+        <p:commandButton value="Guardar Dimensión Entorno" actionListener="#{itemBean.registrarEntorno()}" onclick="PF('dlgok').show();"/>
+            
+           
+        </p:tab>
+        <p:tab title="COMPETENCIAS PARENTALES">
+        
+        
+            <div clas="row">
+            <div class="col-md-6">
+            
+            <p:commandLink value="Supervisión del niño(s)" onclick="PF('dlgsup').show();"/> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores8" value="#{itemBean.valores[8]}" >   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+          
+            <div clas="row">
+            <div class="col-md-6">
+            
+            <p:commandLink value="Prácticas disciplinarias" onclick="PF('dlgpdisc').show();"/> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores9" value="#{itemBean.valores[9]}" >   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+          <br>
+            </br>
+           
+                <div class="row">
+                <div class="col-md-6">
+            
+            <p:commandLink value="Entrega de oportunidades de desarrollo/crecimiento" onclick="PF('dlgende').show();" /> 
+            </div>
+           
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores10" value="#{itemBean.valores[10]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            
+            <div class="row">
+            <div class="col-md-6">
+            
+            <p:commandLink   value="Uso de drogas/alcohol que interfiere con la parentalidad" onclick="PF('dlguso').show();"/> 
+            </div>
+            <div class="col-md-6">               
+            <h:selectOneRadio id="valores11" value="#{itemBean.valores[11]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+           
+            
+            <div class="row">
+            <div class="col-md-6">
+            
+            <p:commandLink   value="Estimulación parental de la educación del niño(s)" onclick="PF('dlgestim').show();"/> 
+            </div>
+            <div class="col-md-6">
+                
+            <h:selectOneRadio id="valores12" value="#{itemBean.valores[12]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            
+            </div>
+            </div>
+           <br>
+            </br>
+            <div class="row">
+            <div class="col-md-6">
+            
+            <p:commandLink   value="Control de acceso de materiales mediaticos/de lectura" onclick="PF('dlgctrl').show();"/> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores13" value="#{itemBean.valores[13]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class="col-md-6">
+            
+            <p:commandLink   value="Literacidad del progenitor(es)/cuidador(es)" onclick="PF('dlglit').show();"/> 
+            </div>
+            <div class="col-md-6">
+            <h:selectOneRadio id="valores14" value="#{itemBean.valores[14]}" >   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            <br>
+            </br>
+           
+            <div class="row">
+            <div class="col-md-6">
+            
+            <p:commandLink   value="Competencias en General" onclick="PF('dlgcompeg').show();"/> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores15" value="#{itemBean.valores[15]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+           <br>
+            </br>
+            
+            <p:commandButton value="Guardar Competencias Familiares" actionListener="#{itemBean.registrarCompetencias()}" onclick="PF('dlgok').show();"/>
+            
+            
+        </p:tab>
+            
+            
+        <p:tab title="INTERACCIONES FAMILIARES">
+        
+        <div clas="row">
+            <div class=" col-md-6">
+            
+            <p:commandLink   value="Apego con el niño(s)" onclick="PF('dlgapegn').show();" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores16" value="#{itemBean.valores[16]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:commandLink   value="Comunicación con el niño(s)" onclick="PF('dlgccomn').show();" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores17" value="#{itemBean.valores[17]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:commandLink   value="Espectativas sobre el niño(s)" onclick="PF('dlgexpn').show();"/> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores18" value="#{itemBean.valores[18]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:commandLink   value="Apoyo mutuo dentro de la familia" onclick="PF('dlgapoyom').show();" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores19" value="#{itemBean.valores[19]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:commandLink   value="Relación entre progenitores/cuidadores" onclick="PF('dlgrelentrep').show();"/> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores20" value="#{itemBean.valores[20]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+                <p:commandLink   value="Rutinas y rituales familiares" onclick="PF('dlgrutyrit').show();"/> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores21" value="#{itemBean.valores[21]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+                <p:commandLink   value="Recreación y juego familiar" onclick="PF('dlgcrecyju').show();"/> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores22" value="#{itemBean.valores[22]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+                <p:commandLink   value="Interacciones Familiares en General" onclick="PF('dlgintg').show();" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores23" value="#{itemBean.valores[23]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            
+            
+            <p:commandButton value="Guardar Interacciones Familiares" actionListener="#{itemBean.registrarInteracciones()}"  onclick="PF('dlgok').show();"/>
+            </p:tab>
+        
+        <p:tab title="SEGURIDAD SOCIAL">
+            
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Ausencia/Presencia de violencia domestica entre los progenitores/cuidadores" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores24" value="#{itemBean.valores[24]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Ausencia/Presencia de otros conflictos familiares" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores25" value="#{itemBean.valores[25]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Ausencia/Presencia de abuso físico en el niño(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores26" value="#{itemBean.valores[26]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Ausencia/Presencia de abuso emocional en el niño(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores27" value="#{itemBean.valores[27]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Ausencia/Presencia de abuso sexual en el niño(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores28" value="#{itemBean.valores[28]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Ausencia/Presencia de negligencia en el niño(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores29" value="#{itemBean.valores[29]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Ausencia/Presencia de acceso a armas" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores30" value="#{itemBean.valores[30]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Seguridad Familiar en General" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores31" value="#{itemBean.valores[31]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            
+            
+            <p:commandButton value="Guardar Seguridad Social" actionListener="#{itemBean.registrarSeguridad()}" onclick="PF('dlgok').show();"/>
+            
+        </p:tab>
+        <p:tab title="BIENESTAR DEL NIÑO">
+            
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Comportamiento del niño(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores32" value="#{itemBean.valores[32]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Desempeño escolar" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores33" value="#{itemBean.valores[33]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Relación del niño(s) con el progenitor(es)/cuidador(es)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores34" value="#{itemBean.valores[34]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Relación del niño con hermano(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores35" value="#{itemBean.valores[35]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Relación del niño con pares" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores36" value="#{itemBean.valores[36]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Cooperación/motivación a permanecer con la familia" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores37" value="#{itemBean.valores[37]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Bienestar del niño en general" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores38" value="#{itemBean.valores[38]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            <br>
+            </br>
+            
+            
+            <p:commandButton value="Guardar Bienestar del Niño" actionListener="#{itemBean.registrarBienestar()}" onclick="PF('dlgok').show();"/>
+            
+        </p:tab>
+        
+        <p:tab title="VIDA SOCIAL COMUNITARIA">
+            
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Relaciones sociales" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores39" value="#{itemBean.valores[39]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Relación con cuidado infantíl, escuelas, servicios extracurriculares" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores40" value="#{itemBean.valores[40]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Conexión con el vecindario y la comunidad espiritual/etnica" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores41" value="#{itemBean.valores[41]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Conexión con la comunidad espiritual/relogiosa" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores42" value="#{itemBean.valores[42]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Iniciativa y aceptación del cuidador de la ayuda y apoyo disponible" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores43" value="#{itemBean.valores[43]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Vida Social Comunitaria en General" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores44" value="#{itemBean.valores[44]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+           
+            
+            
+            
+            
+            <br>
+            </br>
+            
+            
+            <p:commandButton value="Guardar Vida Social Comunitaria" actionListener="#{itemBean.registrarVidaSocial()}" onclick="PF('dlgok').show();"/>
+            
+        </p:tab>
+        
+        <p:tab title="AUTONOMÍA">
+            
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Empleo del cuidador" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores45" value="#{itemBean.valores[45]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Ingreso familiar" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores46" value="#{itemBean.valores[46]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Manejo financiero" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores47" value="#{itemBean.valores[47]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>  
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Comida y nutrición" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores48" value="#{itemBean.valores[48]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>     
+            <br>               
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            <p:outputLabel   value="Transporte" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores49" value="#{itemBean.valores[49]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>        
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            <p:outputLabel   value="Autonomía en General" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores50" value="#{itemBean.valores[50]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>           
+            <br>
+            </br>        
+            <p:commandButton value="Guardar Autonomía" actionListener="#{itemBean.registrarAutonomia()}" onclick="PF('dlgok').show();"/>
+            
+        </p:tab>      
+        <p:tab title="SALUD FAMILIAR">         
+            <div class="row">
+            <div class=" col-md-6">        
+            <p:outputLabel   value="Salud física del progenitor(es)/cuidador(es)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores51" value="#{itemBean.valores[51]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>         
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">         
+            <p:outputLabel   value="Invalidez del progenitor(es)/cuidador(es)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores52" value="#{itemBean.valores[52]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>         
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">       
+            <p:outputLabel   value="Salud mental del progenitor(es)/cuidador(es)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores53" value="#{itemBean.valores[53]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>         
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6"> 
+            <p:outputLabel   value="Salud física del niño(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores54" value="#{itemBean.valores[54]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>        
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">
+            
+            <p:outputLabel   value="Invalidez del niño(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores55" value="#{itemBean.valores[55]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>         
+           <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">          
+            <p:outputLabel   value="Salud mental del niño(s)" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores56" value="#{itemBean.valores[56]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>          
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6"> 
+            <p:outputLabel   value="Acceso familiar a cuidados de salud/salud mental" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores57" value="#{itemBean.valores[57]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            <br>
+            </br>
+            <div class="row">
+            <div class=" col-md-6">      
+            <p:outputLabel   value="Salud Familiar en General" /> 
+            </div>
+            <div class=" col-md-6">
+            <h:selectOneRadio id="valores58" value="#{itemBean.valores[58]}">   
+                <f:selectItem itemLabel="NA" itemValue="3" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="0" itemValue="0" />
+                <f:selectItem itemLabel="-1" itemValue="-1" />
+                <f:selectItem itemLabel="-2" itemValue="-2" />    
+                <f:selectItem itemLabel="-3" itemValue="-3" />
+                <f:selectItem itemLabel="DN" itemValue="4" />
+            </h:selectOneRadio>
+            </div>
+            </div>
+            <br>
+            </br>
+            <p:commandButton value="Guardar Salud Familiar" actionListener="#{itemBean.registrarSalud()}" onclick="PF('dlgok').show();"/>
+        </p:tab>
+        
+        
+        
+        
+        
+    </p:accordionPanel>
+        </h:form>
+                        
+                    </p:fieldset>
+             
+</div>  
+                    
+</div>
+</h:body>
+</f:view>
+</html>

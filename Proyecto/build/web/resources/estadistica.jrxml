@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estadistica" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c4ed111-36e7-47d2-92f2-38466e393132">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Heading 1" fontSize="16" isBold="true"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="3adc13f1-05c1-499b-95fb-011fbede8113"/>
+	<subDataset name="Table Dataset 2" uuid="a37274f6-7f5b-4ff8-a2f3-2dbb5de17c63"/>
+	<subDataset name="Table Dataset 3" uuid="696e55c6-4e7d-49b5-b8da-d28b9e999441"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\jean\\Documents\\NetBeansProjects\\Proyecto\\build\\web\\resources\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="realPath" class="java.lang.String"/>
+	<parameter name="causaIn" class="java.lang.String"/>
+	<parameter name="globalCant" class="java.lang.String"/>
+	<parameter name="globalPos" class="java.lang.String"/>
+	<parameter name="globalNeg" class="java.lang.String"/>
+	<parameter name="globalNeu" class="java.lang.String"/>
+	<parameter name="globalCoinc" class="java.lang.String"/>
+	<parameter name="cantTest" class="java.lang.String"/>
+	<parameter name="nombreEx" class="java.lang.String"/>
+	<parameter name="rutEx" class="java.lang.String"/>
+	<field name="cantidadPositivos" class="java.lang.Integer"/>
+	<field name="cantidadNegativos" class="java.lang.Integer"/>
+	<field name="cantidadNeutros" class="java.lang.Integer"/>
+	<field name="terminosGenerales" class="java.util.List"/>
+	<field name="idRelato" class="java.lang.Integer"/>
+	<field name="coincidencias" class="java.lang.Integer"/>
+	<field name="cantidadTerminos" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="144" splitType="Stretch">
+			<staticText>
+				<reportElement style="Heading 1" x="96" y="73" width="384" height="53" uuid="7c2fe721-30db-415d-b71a-d660f6808029"/>
+				<textElement>
+					<font size="30"/>
+				</textElement>
+				<text><![CDATA[Estadísticas Examinado]]></text>
+			</staticText>
+			<image>
+				<reportElement x="24" y="11" width="140" height="48" uuid="a7d12469-c66a-47ce-b1df-41ae91986584"/>
+				<imageExpression><![CDATA[$P{realPath}+"logo_uv.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="163" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<rectangle>
+				<reportElement x="24" y="10" width="408" height="135" forecolor="#CCCCCC" uuid="93fbc602-ebc7-4305-b121-4ffd3f1fc993"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="61" y="20" width="162" height="20" uuid="1a7ce7b5-eaac-4757-89b5-6cb594a820ef"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="80" width="173" height="20" uuid="4aa909f6-3132-455e-a659-21ece59662cf"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rut del Examinado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="60" width="138" height="20" uuid="527a1997-dd69-42f5-9ed8-7fc09daa05c4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Examinado :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="100" width="173" height="20" uuid="98c38985-0943-4cce-a309-a214aac3ff29"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Causa de Ingreso:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="249" y="120" width="100" height="20" uuid="2ecd5db9-f87d-40fb-a686-83d4063a1c59"/>
+				<textFieldExpression><![CDATA[$P{cantTest}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="61" y="120" width="173" height="20" uuid="ffd76240-2106-473b-be3d-1072364be650"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de Tests]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="249" y="60" width="100" height="20" uuid="3ba3f91c-63d8-4b32-806b-a28cdcbe9ec4"/>
+				<textFieldExpression><![CDATA[$P{nombreEx}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="249" y="80" width="100" height="20" uuid="5883fa03-a8d6-4dcc-81cb-e034d538fa64"/>
+				<textFieldExpression><![CDATA[$P{rutEx}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="311">
+			<rectangle>
+				<reportElement x="63" y="32" width="442" height="271" forecolor="#CCCCCC" uuid="b18c7f26-9a90-43b0-b1ff-f0dde022bc6a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="74" y="82" width="100" height="20" uuid="2a62404b-3f3f-4548-88f8-3ff6dcadfdce"/>
+				<text><![CDATA[Cant. Positivos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="173" y="81" width="111" height="20" uuid="59e9fae2-116b-4fef-aa23-ac25313d8e33"/>
+				<textFieldExpression><![CDATA[$F{cantidadPositivos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="74" y="101" width="100" height="20" uuid="7b72a23f-5e8a-45e1-8815-b99fedd44bef"/>
+				<text><![CDATA[Cant. Negativos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="174" y="101" width="117" height="20" uuid="c50cb8fb-e0a3-4586-810f-911b09a66dc3"/>
+				<textFieldExpression><![CDATA[$F{cantidadNegativos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="74" y="121" width="100" height="20" uuid="48e054f1-1e8e-4baf-8775-81be38f1d9bd"/>
+				<text><![CDATA[Cant. Neutros]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="174" y="121" width="100" height="20" uuid="ae9e702e-5381-40e4-aec4-fb678079c734"/>
+				<textFieldExpression><![CDATA[$F{cantidadNeutros}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="334" y="82" width="148" height="74" uuid="c7f5dc9a-9f7d-46cc-aec2-5039dbf610c7"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{terminosGenerales})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "hijo-est.jasper"]]></subreportExpression>
+			</subreport>
+			<pieChart>
+				<chart isShowLegend="false">
+					<reportElement x="74" y="174" width="197" height="109" uuid="545ce9e6-3bde-4bbd-bec0-74c1a44ec527"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<pieSeries>
+						<keyExpression><![CDATA["cantidadPositivos"]]></keyExpression>
+						<valueExpression><![CDATA[$F{cantidadPositivos}]]></valueExpression>
+						<labelExpression><![CDATA["positivos"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["cantidadNegativos"]]></keyExpression>
+						<valueExpression><![CDATA[$F{cantidadNegativos}]]></valueExpression>
+						<labelExpression><![CDATA["negativos"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["cantidadNeutros"]]></keyExpression>
+						<valueExpression><![CDATA[$F{cantidadNeutros}]]></valueExpression>
+						<labelExpression><![CDATA["neutros"]]></labelExpression>
+					</pieSeries>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement x="118" y="12" width="100" height="30" forecolor="#000000" uuid="3bb4e25f-99bc-4c9e-a80d-7a598caf1427"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relato]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="107" y="2" width="142" height="40" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="53174bd2-159e-472a-ab46-1e10a1e57958"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="118" y="12" width="100" height="30" forecolor="#000000" uuid="fa0cb145-5911-4ab2-83bd-97df474a6723"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relato]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="42" width="100" height="19" forecolor="#000000" uuid="129e77df-0d11-4b7e-89f7-6e710a541425"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle]]></text>
+			</staticText>
+			<pieChart>
+				<chart isShowLegend="false">
+					<reportElement x="282" y="174" width="200" height="109" uuid="235d102c-4fb8-45ea-8a28-e06722c3e5f8"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<pieSeries>
+						<keyExpression><![CDATA["cantidadCoincidencias"]]></keyExpression>
+						<valueExpression><![CDATA[$F{coincidencias}]]></valueExpression>
+						<labelExpression><![CDATA["coincidencias"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["noCoincidencias"]]></keyExpression>
+						<valueExpression><![CDATA[$F{cantidadTerminos}-$F{coincidencias}]]></valueExpression>
+						<labelExpression><![CDATA["noCoincidencias"]]></labelExpression>
+					</pieSeries>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<textField>
+				<reportElement x="173" y="60" width="111" height="20" uuid="9f374b0e-a529-4580-82ff-3c1d9dc2048f"/>
+				<textFieldExpression><![CDATA[$F{cantidadTerminos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="74" y="61" width="100" height="20" uuid="6fe1918c-8a39-47b4-8038-b55a51d247a5"/>
+				<text><![CDATA[Cant. Términos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="74" y="136" width="100" height="20" uuid="59bda3f2-4f6f-4a97-a021-dedfbb009d44"/>
+				<text><![CDATA[Cant, Coincidencias]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="174" y="136" width="100" height="20" uuid="2d3e0dde-ff36-40bd-99b3-75bc0cfabd3e"/>
+				<textFieldExpression><![CDATA[$F{coincidencias}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="400" y="62" width="80" height="20" uuid="f72c35ec-25e2-474d-8fc0-ebcd19bcbae4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Frecuencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="334" y="62" width="69" height="20" uuid="3d2d8d48-f601-47f9-b1a3-3530142738c9"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Término]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="164" y="12" width="129" height="30" uuid="26144b26-f43d-4ba9-bab2-fb2fef34dbb3"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="38">
+			<staticText>
+				<reportElement x="18" y="13" width="100" height="20" uuid="b71e6bb0-27cf-4f66-a42e-b0f3ac970f20"/>
+				<text><![CDATA[Reporte generado el]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="122" y="13" width="100" height="20" uuid="95477891-2908-41a8-b6c0-84f3219bc3d7"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="496" y="13" width="40" height="20" uuid="534bbe3c-2472-4b0e-9672-c700854da6a6"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="416" y="13" width="80" height="20" uuid="2d92aae6-1e31-48a1-8e7e-c155919b6b3e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="343" splitType="Stretch">
+			<staticText>
+				<reportElement x="444" y="318" width="100" height="20" uuid="1317f755-9a84-45a8-bdd9-e289e214069b"/>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="61" y="41" width="445" height="269" forecolor="#CCCCCC" uuid="334f48f5-b850-4f93-b2ea-062ca1173c06"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="105" y="11" width="142" height="40" forecolor="#CCCCCC" backcolor="#FFFFFF" uuid="30c86d7a-8550-4a62-aac4-a3f49667b4ce"/>
+			</rectangle>
+			<line>
+				<reportElement x="443" y="317" width="100" height="1" uuid="f1033f79-52b7-4b38-8c9d-67203cf1e053"/>
+			</line>
+			<textField>
+				<reportElement x="182" y="92" width="111" height="20" uuid="42b3e5a7-6414-4ffe-842f-a24a2e4fe3dc"/>
+				<textFieldExpression><![CDATA[$P{globalPos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="83" y="72" width="100" height="20" uuid="f18f490e-4540-40ce-a895-158d3ff937e1"/>
+				<text><![CDATA[Cant. Términos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="112" width="117" height="20" uuid="cfdef912-c70c-4a3f-a143-3f966ed52432"/>
+				<textFieldExpression><![CDATA[$P{globalNeg}]]></textFieldExpression>
+			</textField>
+			<pieChart>
+				<chart isShowLegend="false">
+					<reportElement x="75" y="187" width="197" height="106" uuid="a0eba3a8-30c0-4d07-8ef3-6bc0c6d426cd"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<pieSeries>
+						<keyExpression><![CDATA["cantidadPositivos"]]></keyExpression>
+						<valueExpression><![CDATA[Integer.valueOf($P{globalCant})]]></valueExpression>
+						<labelExpression><![CDATA["positivos"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["cantidadNegativos"]]></keyExpression>
+						<valueExpression><![CDATA[Integer.valueOf($P{globalNeg})]]></valueExpression>
+						<labelExpression><![CDATA["negativos"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["cantidadNeutros"]]></keyExpression>
+						<valueExpression><![CDATA[Integer.valueOf($P{globalNeu})]]></valueExpression>
+						<labelExpression><![CDATA["neutros"]]></labelExpression>
+					</pieSeries>
+				</pieDataset>
+				<piePlot isShowLabels="true">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<textField>
+				<reportElement x="182" y="146" width="100" height="20" uuid="393e5d25-b62e-4050-adfe-b5b544309d15"/>
+				<textFieldExpression><![CDATA[$P{globalCoinc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="83" y="111" width="100" height="20" uuid="ac4a282f-8073-40dd-bd98-883208654426"/>
+				<text><![CDATA[Cant. Negativos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="92" width="100" height="20" uuid="abff709b-c18e-4239-aade-096ae8b580c5"/>
+				<text><![CDATA[Cant. Positivos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="146" width="100" height="20" uuid="d05bc2f1-8a30-4dd1-98e6-f361a2473cc5"/>
+				<text><![CDATA[Cant, Coincidencias]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="183" y="74" width="111" height="20" uuid="73bff43f-db59-4ed3-8d2d-d06b14c1f077"/>
+				<textFieldExpression><![CDATA[$P{globalCant}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="82" y="131" width="100" height="20" uuid="aff8ec95-3f91-4b8b-82fc-1b5f22b5ffbc"/>
+				<text><![CDATA[Cant. Neutros]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="182" y="131" width="100" height="20" uuid="20671ff2-e8dc-4b49-a0f4-85dc41f805ac"/>
+				<textFieldExpression><![CDATA[$P{globalNeu}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="124" y="21" width="100" height="30" forecolor="#000000" uuid="e9dbf00f-641b-4208-8470-685d1f1fac91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Global]]></text>
+			</staticText>
+			<pieChart>
+				<chart isShowLegend="false">
+					<reportElement x="280" y="187" width="200" height="106" uuid="23c38aeb-b47d-4012-b490-b3fab20258a4"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<pieSeries>
+						<keyExpression><![CDATA["cantidadCoincidencias"]]></keyExpression>
+						<valueExpression><![CDATA[Integer.valueOf($P{globalCoinc})]]></valueExpression>
+						<labelExpression><![CDATA["coincidencias"]]></labelExpression>
+					</pieSeries>
+					<pieSeries>
+						<keyExpression><![CDATA["noCoincidencias"]]></keyExpression>
+						<valueExpression><![CDATA[Integer.valueOf($P{globalCant})-Integer.valueOf($P{globalCoinc})]]></valueExpression>
+						<labelExpression><![CDATA["noCoincidencias"]]></labelExpression>
+					</pieSeries>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

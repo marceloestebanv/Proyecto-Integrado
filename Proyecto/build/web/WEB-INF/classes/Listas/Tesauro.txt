@@ -1,0 +1,13 @@
+1,1,gallina,madrina,tia,limpio
+1,2,leche,mantequilla,pan,huevo,casa,texto
+1,3,comedor,mesita
+2,1,mama,papa,hermano
+3,1
+4,1
+5,1
+6,1
+7,1
+8,1
+9,1
+10,2
+11,1

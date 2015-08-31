@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                  <link href="/Proyecto/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+          <link href="/Proyecto/resources/css/mycss.css" rel="stylesheet" type="text/css"/>
+        <script src="/Proyecto/resources/js/bootstrap.js" type="text/javascript"></script>
+       
+                
+                
+                <title>Estadisticas Examinado</title>
+            </f:facet>
+            
+               <style type="text/css">
+            h1 {
+               display: block; 
+               text-align: center
+            }
+                 .form {
+     margin-left: 10%;
+    margin-right:10%;
+     //si pongo esto me aparece la barra de scroll  width:100%; 
+    }
+     .datalist-noborder .ui-datalist-content {
+border: none;
+}
+    
+            
+            </style>
+            
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north"   size="150"  collapsible="true" style="color: #888">
+            
+                    <h:panelGrid  columns ="3"  cellpadding="15" width="100%"  >
+            <p:graphicImage value="/resources/imagen/logo_uv.png"  style="display:block;padding: 25px"/>
+            <h1> CAT-A</h1>
+            
+            <h:panelGrid   style="display: block;float: right;text-align: center " >
+            <p:graphicImage  value="/resources/imagen/images.jpg" width="30%"  />
+            <h:outputText value="#{loginControlador.usuario.nombre}" style="display: block;  text-align: center"  /> 
+            </h:panelGrid>
+            </h:panelGrid>
+                    
+                    
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="70" closable="true" collapsible="true">
+                 <h:outputText value=" Universidad de Valparaíso. 
+                   Todos los derechos reservados. 
+                   Chile - 2015"  style="padding: 1%; display: block;text-align: center"  /> 
+                 
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="175" header="Menu" collapsible="true">
+                    
+                      <h:form>
+                    <p:menu>
+                       
+                           <p:menuitem value="Inicio"   outcome="inicioCAT.xhtml" /> 
+                            <p:menuitem value="Agregar Usuario" outcome="/nuevoUsuario.xhtml" />
+                            <p:menuitem value="Gestionar Cuenta" outcome="/gestionarUsuario.xhtml" />
+                            <p:menuitem value="Agregar Examinado" outcome="nuevoExaminado.xhtml" />
+                            <p:menuitem value="Agregar Test" outcome="ingresarTest.xhtml" />
+                             <p:menuitem value="Histórico de Test" outcome="gestionarTests.xhtml" />
+                             <p:menuitem value="Estadísticas" outcome="consultarExaminados.xhtml" />
+                             <p:menuitem value="Administrar Terminos" outcome="administrarTerminos.xhtml" />
+                             <p:menuitem value="Salir" action="#{loginControlador.logout()}" />
+                            
+                   </p:menu>
+                    
+                      </h:form>
+                    
+                    
+                    
+                    
+                  </p:layoutUnit >
+
+                <p:layoutUnit position="center">
+                   
+                   
+                    <f:metadata>
+                        <f:viewParam name="rutExaminado" value="#{testBean.test.rutExaminado}" />
+                        
+                    </f:metadata> 
+                    
+                   
+                     <h:form class="form"> 
+                    <h2>Estadísticas por Examinado</h2>
+                    
+                    <br/>
+
+                    <p:fieldset legend="Información " style="margin-bottom:20px">
+                            <h:panelGrid columns="2" cellpadding="5">
+                             
+                                
+                           <b>Nombre del Examinado:  </b>  <h:outputText value=" #{testBean.examinado.nombre} " />
+                           <b>Rut del Examinado:  </b>  <h:outputText value=" #{testBean.examinado.rut} " />
+                           <b>Causa Ingreso del Examinado:  </b>  <h:outputText value=" #{testBean.getCausaById(testBean.examinado.idCausaIngreso)} " />
+                          <b>Cantidad de Tests:  </b>   <h:outputText value=" #{calcularMetricas.cantidadTestsExaminado} ID: #{calcularMetricas.listaTestsExaminadoString}"/>
+                             
+                             
+                         </h:panelGrid >
+                         
+                         </p:fieldset>
+                    
+                    <br/>
+                    <h3>Estadísticas por Relato</h3>
+                    
+                    
+                    
+                    <p:dataList value="#{calcularMetricas.metricaTestsExaminado}" varStatus="loop" styleClass="datalist-noborder" var="metricas" type="definition">
+        
+                        
+                        <p:fieldset legend="Relato #{loop.index+1}" style="margin-bottom:20px">
+                            
+                              <div class="row">
+                                  <div class="col-md-7" style="padding-left: 40px;padding-bottom: 40px">
+                                      
+        <h:panelGrid columns="1" cellpadding="5">
+           
+          <h5 > Métricas</h5>
+            
+            <h:outputText value="  Términos:  #{metricas.cantidadTerminos} " />
+            <h:outputText value="   Neutros:   #{metricas.cantidadNeutros}  " />
+            <h:outputText value="   Positivos:   #{metricas.cantidadPositivos}  " />
+             <h:outputText value="   Negativos: #{metricas.cantidadNegativos}  " />
+              <h:outputText value="  Coincidencias: #{metricas.coincidencias}    " />
+            
+
+        </h:panelGrid>
+                            
+                             </div>
+                              
+                               <div class="col-md-5"> 
+              
+                             <h:panelGrid columns="1" cellpadding="5">    
+
+                                  <h5 >  Términos Coincidentes </h5> 
+                                 
+            <p:dataTable var="as" value="#{calcularMetricas.getTerminosGeneralesMetricaTestsExaminado(metricas)}" style="width: 60%"
+                         emptyMessage="No hay Términos"
+ rows="5" 
+
+                         >
+                
+                            <p:column headerText="Término " >
+                                <h:outputText value="#{as.termino}"/>
+                </p:column>
+   
+                              <p:column headerText="Frecuencia" >
+                      
+                                  <h:outputText value="#{as.frecuencia}"/>
+                            
+                </p:column>
+
+                </p:dataTable>
+            
+            
+            
+           
+        </h:panelGrid>                    
+                            
+                            
+                 </div>
+                          </div>  
+                            <br/>           
+                            
+                            
+                            
+                      
+                            
+                        <div class="row">
+                      <div class="col-md-4" >
+                           <p:chart type="pie" model="#{testBean.createPieModelConnotacion(metricas)}" style="width:300px; height:200px"/>
+                      </div>
+                            
+                             <div class="col-md-4" >
+                                  <p:chart type="pie" model="#{testBean.createPieModel1(metricas)}" style="width:300px; height:200px" />
+                      </div>
+                            <div class="col-md-4" >
+                            </div>
+                            </div>
+                             
+                           
+    </p:fieldset>
+                        
+            
+    </p:dataList>
+                    
+                                         
+                     <p:fieldset legend="Resultado Global " style="margin-bottom:20px">
+        <h:panelGrid columns="1" cellpadding="5">
+
+            <h:outputText value="  Términos:  #{calcularMetricas.metricaGlobalTestsExaminado.cantidadTerminos} " />
+            <h:outputText value="    Neutros:   #{calcularMetricas.metricaGlobalTestsExaminado.cantidadNeutros}  " />
+            <h:outputText value="   Positivos:   #{calcularMetricas.metricaGlobalTestsExaminado.cantidadPositivos}  " />
+            <h:outputText value="     Negativos: #{calcularMetricas.metricaGlobalTestsExaminado.cantidadNegativos}  " />
+            <h:outputText value="   Coincidencias: #{calcularMetricas.metricaGlobalTestsExaminado.coincidencias}    " />
+           
+                        
+                  </h:panelGrid >
+                  
+                  
+                    <h:panelGrid columns="2" cellpadding="5">
+                                <p:chart type="pie" model="#{testBean.createPieModelConnotacion(calcularMetricas.metricaGlobalTestsExaminado)}" style="width:300px; height:200px"/>
+                                <p:chart type="pie" model="#{testBean.createPieModel1(calcularMetricas.metricaGlobalTestsExaminado)}" style="width:300px; height:200px" />
+            
+            </h:panelGrid>
+  
+     
+    </p:fieldset> 
+        
+          
+                    <h:commandButton  value="exportar" actionListener ="#{mannagerPDFBean.exportarPDFEstadistExaminado()}"/>
+                    </h:form>  
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

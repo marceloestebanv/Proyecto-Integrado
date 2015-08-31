@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+        <f:facet name="first">
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="/WebApplication5/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/WebApplication5/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="/WebApplication5/resources/css/docs.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/WebApplication5/resources/css/newcss.css" rel="stylesheet" type="text/css"/>
+</f:facet>
+</h:head>
+<h:body>
+
+
+    
+<div class="row" style="background-color: #F5F5F5;padding: 20px;">
+<div class="col-md-3"><img src="/WebApplication5/resources/imagen/logo_uv.png" alt=""/>
+</div>
+<div class="span6 pull-right">
+<div class="hidden-xs">
+<img src="/WebApplication5/resources/imagen/header_decom.png" alt=""/>
+</div>
+</div>
+</div>
+         
+<div class="row">
+    <p:growl autoUpdate="true"/>
+    <div class="col-md-3" style="margin: 10px">
+    <h:form>
+    <p:panelMenu style="width:300px">
+        <p:submenu label="Gestionar Usuarios">
+            <p:menuitem value="Ingresar Nuevo Usuario" actionListener="#{menuBeanAdministrador.nuevo}" icon="ui-icon-disk" />
+            <p:menuitem value="Modificar un Usuario" actionListener="#{menuBeanAdministrador.modificar}" icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Eliminar un Usuario" actionListener="#{menuBeanAdministrador.eliminar}" icon="ui-icon-close" />
+         
+        </p:submenu>
+        <p:submenu label="Ingresar al Sistema">
+            <p:menuitem value="Sistema NCFAS" actionListener="#{menuBeanAdministrador.sistema}"  />
+            <p:menuitem value="Sistema CAT-A"  />
+        </p:submenu>
+    </p:panelMenu>
+ <p:panelGrid columns="2">
+    <f:facet name="header">
+        <img src="/WebApplication5/resources/imagen/mujer.png" alt=""/>
+    </f:facet>
+ 
+    <h:outputText value="Nombre:" />
+    <h:outputText value="#{mbsesionBean.nombreusuario}" />
+ 
+    <h:outputText value="Tipo:" />
+    <h:outputText value="Administrador" />
+ 
+</p:panelGrid>
+<h:commandButton id="salir" class="btn btn-info" value="Salir" action="#{usuarioBean.logout()}" />
+</h:form> 
+</div>
+                    
+                    
+<div class="col-md-8" style="margin: 10px">
+             <p:growl id="msgs" showDetail="true" />
+             <h:form>
+                    <p:fieldset legend="Crear Nuevo Usuario" style="margin-bottom:20px">
+ 
+                        <h:form>
+            <p:outputLabel id="outputLabel1" value="Ingrese Rut del Nuevo Usuario:" style="margin-right:65px"/>
+            <p:inputText id="rut" value="#{usuarioBean.usuario.rut}" required="true"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Ingrese Nombre del Nuevo Usuario:" style="margin-right:20px"/>
+            <p:inputText id="nombre" value="#{usuarioBean.usuario.nombre}" required="true" />
+            <br>
+            </br>
+                
+            <p:outputLabel value="Ingrese Correo del Nuevo Usuario:" style="margin-right:30px"/>
+            <p:inputText id="correo" value="#{usuarioBean.usuario.correo}" required="true" />
+            <br>
+            </br>
+            
+            <p:outputLabel value="Ingrese Password del Nuevo Usuario:"/>
+            <p:password label="password"  id="password" value="#{usuarioBean.usuario.password}" required="true" />
+            <br>
+            </br>
+            
+            <p:outputLabel value="Seleccione Tipo Usuario" style="margin-right:145px"    /> <p:selectOneMenu value="#{usuarioBean.tipo}" required="true">  
+                    <f:selectItem itemLabel="Psicologo" itemValue="2" />
+                    <f:selectItem itemLabel="Asistente Social" itemValue="3" />
+            </p:selectOneMenu>
+            <br>
+            </br>
+            
+            <p:commandButton value="Guardar Usuario" actionListener="#{usuarioBean.insertar()}"  onclick="PF('dlgok1').show();"/>
+           
+                    </h:form> 
+                        
+                     <p:dialog id="dlgok" header="Usuario Guardado con exito!" showEffect="explode" hideEffect="bounce"
+                    widgetVar="dlgok1" modal="true" resizable="false" minWidth="200">
+                         <h:form id="formEliminar">
+                
+                    <p:commandButton  value="Ok" onclick="PF('dlgok').hide();"/>
+                        </h:form>
+                     </p:dialog>
+                    </p:fieldset>
+             </h:form>
+</div>  
+                    
+</div>
+    
+   <div class="row">
+        <div class="row" id="logo">
+         <img src="/WebApplication5/resources/imagen/logofamilia.png" alt=""/>
+        </div>
+    
+    <div class="row" id="h1titulo">
+         <h1 >
+             PPF Aitué
+         </h1>
+</div>
+</div>
+</h:body>
+</f:view>
+</html>

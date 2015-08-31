@@ -1,0 +1,438 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+        <f:facet name="first">
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="/Proyecto/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/docs.min.css" rel="stylesheet" type="text/css"/>
+                <link href="/Proyecto/resources/css/newcss.css" rel="stylesheet" type="text/css"/>
+
+        </f:facet>
+        </h:head>
+        <h:body>
+       <div class="row" id="logo">
+         <img src="/Proyecto/resources/imagen/logofamilia.png" alt=""/>
+</div>
+    
+    <div class="row" id="h1titulo">
+         <h1 >
+             PPF Aitué
+         </h1>
+</div>
+
+           
+<div class="row" style="background-color: #F5F5F5;padding: 20px;">
+<div class="col-md-3"><img src="/Proyecto/resources/imagen/logo_uv.png" alt=""/>
+</div>
+<div class="span6 pull-right">
+<div class="hidden-xs">
+<img src="/Proyecto/resources/imagen/header_decom.png" alt=""/>
+</div>
+</div>
+</div>
+    
+    
+    
+    
+<div class="row">
+    <p:growl autoUpdate="true"/>
+    <div class="col-md-3" style="margin: 10px">
+    <h:form>
+    <p:panelMenu style="width:300px">
+        <p:submenu label="Gestionar NCFAS">
+            <p:menuitem value="Ingresar un Nuevo NCFAS" actionListener="#{menuBeanAdministrador.ingresoNcfas}" icon="ui-icon-disk" />
+            <p:menuitem value="Ver NCFAS guardados"  actionListener="#{menuBeanAdministrador.verncfas}" icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Ver NCFAS de tipo Inical"  actionListener="#{menuBeanAdministrador.verNcfasIniciales}" icon="ui-icon-arrowrefresh-1-w" />   
+            <p:menuitem value="Ver NCFAS de tipo Final"  actionListener="#{menuBeanAdministrador.verNcfasFinales}" icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Ver NCFAS por Fecha"  actionListener="#{menuBeanAdministrador.verNcfasPorFecha}" icon="ui-icon-arrowrefresh-1-w" />
+        
+        </p:submenu>
+        
+        <p:submenu label="Módulo Minería de Datos">
+            <p:menuitem value="Generar Minería" actionListener="#{menuBeanAdministrador.mineriadedatos}" icon="ui-icon-wrench"/>
+        </p:submenu>
+        
+        <p:submenu label="Módulo Estadística Desciptiva">
+            <p:menuitem value="Ver Gráfico Seleccionando NCFAS" actionListener="#{menuBeanAdministrador.estadistica}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de Items " actionListener="#{menuBeanAdministrador.comparar}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de Items Generales" actionListener="#{menuBeanAdministrador.comparar2}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de fecha de Inicio y fecha Final" actionListener="#{menuBeanAdministrador.comparar3}" icon="ui-icon-bookmark"/>
+        </p:submenu>
+    </p:panelMenu>
+
+         <p:panelGrid columns="2">
+    <f:facet name="header">
+        <img src="/Proyecto/resources/imagen/mujer.png" alt=""/>
+    </f:facet>
+ 
+    <h:outputText value="Nombre:" />
+    <h:outputText value="#{mbsesionBean.nombreusuario}" />
+ 
+    <h:outputText value="Tipo:" />
+    <h:outputText value="Administrador" />
+ 
+</p:panelGrid>
+<h:commandButton id="salir" class="btn btn-info" value="Salir" action="#{usuarioBean.logout()}" />
+</h:form> 
+</div>        
+            
+
+    <div class="col-md-7">
+    <p:fieldset legend="Valores de por Dimensión" >             
+             <h:form> 
+        <h3>Nombre Familia: VALENZUELA </h3> 
+        <h:outputText value="#{listarItemsBean.nombrefamilia}" />
+    
+    <p:accordionPanel multiple="true">
+        <p:tab title="ENTORNO">
+            
+            <p:outputLabel value="Estabilidad de la vivienda :" /> <br></br>
+            <p:outputLabel value="#{listarItemsBean.valores1[1]}"/>
+            <br>
+            </br>
+           
+            <p:outputLabel value="Seguridad en la Comunidad :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores1[2]}" />
+            <br>
+            </br>
+            <p:outputLabel value="Riesgos del Entorno :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores1[3]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Habitabilidad de a Vivienda :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores1[4]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Higene Personal :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores1[5]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Entorno de Aprendizaje :" /><br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores1[6]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Entorno en General :" /><br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores1[7]}"/>
+            <br>
+            </br>  
+        </p:tab>
+        
+        <p:tab title="COMPETENCIAS PARENTALES">
+        <p:outputLabel value="Supervición del Niño(s) :" /> <br></br>
+        <p:outputLabel  value="#{listarItemsBean.valores2[1]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Prácticas Disciplinarias :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores2[2]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Entrega de Oportunidades de Desrrollo / Crecimiento :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores2[3]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Uso de Drogas/Alcohol que Interfiere con la Parentalidad :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores2[4]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Estimulación Parental de la Educación del Niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores2[5]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Control del acceso de Materiales Mediaticos de lectura :" /><br></br> 
+            <p:outputLabel  value="#{listarItemsBean.valores2[6]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Literacidad del Progenitor(es/Cuidador(es) :" /><br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores2[7]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Competencias en General :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores2[8]}"/>
+            
+            
+            <br>
+            </br>
+            
+           
+            </p:tab>
+        <p:tab title="INTERACCIONES FAMILIARES">
+        
+            
+            <p:outputLabel value="Apego con el Niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores3[1]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Comunicación con el Niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores3[2]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Espectiativas sobre el Niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores3[3]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Apoyo mutuo dentro de la familia :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores3[4]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Relación entre los Progenitores/Cuidadores :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores3[5]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Rutinas y Rituales Familiares :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores3[6]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Recreación y Juego Familiar :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores3[7]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Interacciónes Familiares en General :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores3[8]}"/>
+            <br>
+            </br>
+            
+            
+            </p:tab>
+        <p:tab title="SEGURIDAD SOCIAL">
+        
+            
+            <p:outputLabel value="Ausencia/Presencia de violencia domestica entre los progenitores/cuidadores :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores4[1]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Ausencia/Presencia de otros conflictos familiares :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores4[2]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Ausencia/Presencia de abuso físio en el niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores4[3]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Ausencia/Presencia de abuso emocional en el niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores4[4]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Ausencia/Presencia de abuso Sexual en el niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores4[5]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Ausencia/Presencia de Negligencias en el niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores4[6]}"/>
+            <br>
+            </br>
+
+            <p:outputLabel value="Ausencia/Presencia de Acceso a Armas :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores4[7]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Seguridad Familiar en General :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores4[8]}"/>
+            <br>
+            </br>
+                        
+          </p:tab>
+
+        <p:tab title="BIENESTAR DEL NIÑO">
+        
+            
+            <p:outputLabel value="Comportamieno del niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores5[1]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Desempeño escolar :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores5[2]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Relación del niño(s) con el progenitor(es)/cuidador(es) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores5[3]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Relación del niño con hermano(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores5[4]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Relación del niño con pares :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores5[5]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Cooperación/motivación a permanecer con la familia :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores5[6]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Bienestar del Niño en General :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores5[7]}"/>
+            <br>
+            </br>
+            
+ </p:tab>
+        <p:tab title="VIDA SOCIAL COMUNITARIA">
+        
+            
+            <p:outputLabel value="Relaciones sociales :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores6[1]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Relaciones con cuidado infantil, escuelas, servicioes extracurriculares :" /><br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores6[2]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Conexión con el vecindario y la comunidad espiritual/etnica :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores6[3]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Conexión con la comunidad espiritual/religiosa :" /><br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores6[4]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Iniciativa de aceptación del cuidador de la ayuda y apoyo disponible :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores6[5]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Vida Social/Comunitaria en General :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores6[6]}"/>
+            <br>
+            </br>
+            
+         </p:tab>  
+            
+            
+        <p:tab title="AUTONOMIA">
+
+             <p:outputLabel value="Empleo del Cuidador :" /><br></br> 
+             <p:outputLabel value="#{listarItemsBean.valores7[1]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Ingreso Familiar :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores7[2]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Manejo Financiero" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores7[3]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Comida y Nutrición :" /><br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores7[4]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Transporte :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores7[5]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Autonomía en General :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores7[6]}"/>
+            <br>
+            </br>
+            
+            </p:tab>
+            
+            
+        <p:tab title="SALUD FAMILIAR">
+
+            <p:outputLabel value="Salud física del progenitor(es)/cuidador(es) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores8[1]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Invalidez del progenitor(es)/cuidador(es) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores8[2]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Salud mental del progenitor(es)/cuidador(es) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores8[3]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Salud física del niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores8[4]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Invalidez del niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores8[5]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Salud mental del niño(s) :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores8[6]}"/>
+            <br>
+            </br>
+            
+            <p:outputLabel value="Acceso Familiar a Cuidados de Salud/Salud Mental :" /> <br></br>
+            <p:outputLabel  value="#{listarItemsBean.valores8[7]}"/>
+            <br>
+            </br>
+            
+        
+        <p:outputLabel value="Salud Familiar en General :" /> 
+        <br></br>
+        <p:outputLabel  value="#{listarItemsBean.valores8[8]}"/>
+            <br>
+            </br>
+            
+            </p:tab>
+    </p:accordionPanel>
+        </h:form>
+        <br>  
+        </br>
+        
+        
+
+           </p:fieldset>
+</div>
+    
+            </div>
+        
+
+</h:body>
+
+</f:view>
+</html>

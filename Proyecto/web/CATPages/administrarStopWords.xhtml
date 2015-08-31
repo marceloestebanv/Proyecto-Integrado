@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+         <link href="/Proyecto/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/Proyecto/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="/Proyecto/resources/js/bootstrap.js" type="text/javascript"></script>
+       
+                
+                
+                <title>Inicio</title>
+            </f:facet>
+            
+               <style type="text/css">
+            h1 {
+               display: block; 
+               text-align: center
+            }
+  
+
+
+            
+            </style>
+            
+        </h:head>
+
+        <h:body>
+            
+            
+   
+            
+            <p:layout fullPage="true" >
+
+                <p:layoutUnit position="north"   size="150"  collapsible="true" >
+            
+                    <h:panelGrid  columns ="3"  cellpadding="15" width="100%"  >
+            <p:graphicImage value="/resources/imagen/logo_uv.png"  style="display:block;padding: 25px"/>
+            <h1> CAT-A</h1>
+            
+            <h:panelGrid   style="display: block;float: right;text-align: center " >
+            <p:graphicImage  value="/resources/imagen/images.jpg" width="30%"  />
+            <h:outputText value="#{loginControlador.usuario.nombre}" style="display: block;  text-align: center"  /> 
+            </h:panelGrid>
+            </h:panelGrid>
+                    
+                    
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="70" closable="true" collapsible="true">
+                 <h:outputText value=" Universidad de Valparaíso. 
+                   Todos los derechos reservados. 
+                   Chile - 2015"  style="padding: 1%; display: block;text-align: center"  /> 
+                 
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="200" header="Menu">
+                   
+                      <h:form>
+                    <p:menu>
+                       
+                             <p:menuitem value="Inicio"   outcome="inicioCAT.xhtml" /> 
+                            <p:menuitem value="Agregar Usuario" outcome="/nuevoUsuario.xhtml" />
+                            <p:menuitem value="Gestionar Cuenta" outcome="/gestionarUsuario.xhtml" />
+                            <p:menuitem value="Agregar Examinado" outcome="nuevoExaminado.xhtml" />
+                            <p:menuitem value="Agregar Test" outcome="ingresarTest.xhtml" />
+                             <p:menuitem value="Histórico de Test" outcome="gestionarTests.xhtml" />
+                             <p:menuitem value="Estadísticas" outcome="consultarExaminados.xhtml" />
+                             <p:menuitem value="Administrar Terminos" outcome="administrarTerminos.xhtml" />
+                             <p:menuitem value="Salir" action="#{loginControlador.logout()}" />
+                            
+                   </p:menu>
+                    
+                      </h:form>
+                  </p:layoutUnit >
+
+                <p:layoutUnit position="center">
+                    
+                     <h:form id="form2" >  
+                          
+                         <h3>Añadir Stopword</h3>
+                                 <h:panelGrid columns="2">
+                    <h:outputLabel value="Nombre StopWord " />
+                    <p:inputText  value="#{adminStopWordsBean.stopWord}" required="true"/>
+                     
+                   
+                    <f:facet name="footer">
+                        <p:commandButton value="Añadir StopWord"  action="#{adminStopWordsBean.añadirStopWord}" update=":formMostrar:tableTerm"  />
+                    </f:facet>
+                </h:panelGrid>
+                </h:form>  
+                    
+                    
+                    
+                     <h:form id="formMostrar" >
+                                 
+        <p:messages id="messages" for="formMostrar" showDetail="true" autoUpdate="true" closable="true" />             
+                                
+                        <h3>Stopwords existentes</h3>
+                        
+                        <p:dataTable var="as" style="width: 90% " value="#{adminStopWordsBean.stopWords}" id="tableTerm"
+                         emptyMessage="No hay Terminos"
+paginator="true" rows="10" paginatorPosition="bottom"
+paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+
+                         >
+                
+                            <p:column headerText="Termino " >
+                                <h:outputText value="#{as}"/>
+                </p:column>
+                            
+                      
+
+                    
+                             
+               <p:column headerText="Quitar " >
+                    <p:commandButton icon="ui-icon-trash"
+                        title="Delete this actor"
+                        actionListener="#{adminStopWordsBean.quitarStopWord(as)}" 
+                        ajax="false" />
+                </p:column>
+                
+                            
+                            
+                </p:dataTable>
+                        
+                        <br/>
+                        <h:commandButton value="Guardar Cambios" action="#{adminStopWordsBean.serializarStopWords()}" class="btn btn-primary"/>
+                       
+                         </h:form>   
+                     
+                    
+                </p:layoutUnit>
+
+            </p:layout>
+                
+
+        </h:body>
+
+    </f:view>
+</html>
+

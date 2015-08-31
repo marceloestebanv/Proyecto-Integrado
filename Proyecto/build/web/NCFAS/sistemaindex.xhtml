@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+        <f:facet name="first">
+        <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link href="/WebApplication5/resources/css/bootstrap-theme.css" rel="stylesheet" type="text/css"/>
+        <link href="/WebApplication5/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="/WebApplication5/resources/css/docs.min.css" rel="stylesheet" type="text/css"/>
+        <link href="/WebApplication5/resources/css/newcss.css" rel="stylesheet" type="text/css"/>
+</f:facet>
+</h:head>
+<h:body>
+
+<div class="row" id="logo">
+         <img src="/WebApplication5/resources/imagen/logofamilia.png" alt=""/>
+</div>
+    
+    <div class="row" id="h1titulo">
+         <h1 >
+             PPF Aitué
+         </h1>
+</div>
+   
+<div class="col-md-12" style="background-color: #F5F5F5;padding: 20px;">
+<div class="col-md-3"><img src="/WebApplication5/resources/imagen/logo_uv.png" alt=""/>
+</div>
+<div class="span6 pull-right">
+<div class="hidden-xs">
+<img src="/WebApplication5/resources/imagen/header_decom.png" alt=""/>
+</div>
+</div>
+</div>
+         
+<div class="row">
+    <p:growl autoUpdate="true"/>
+    <div class="col-md-3" style="margin: 10px">
+    <h:form>
+    <p:panelMenu style="width:300px">
+        <p:submenu label="Gestionar NCFAS">
+            <p:menuitem value="Ingresar un Nuevo NCFAS" actionListener="#{menuBeanAdministrador.ingresoNcfas}" icon="ui-icon-disk" />
+            <p:menuitem value="Ver NCFAS guardados"  actionListener="#{menuBeanAdministrador.verncfas}" icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Ver NCFAS de tipo Inical"  actionListener="#{menuBeanAdministrador.verNcfasIniciales}" icon="ui-icon-arrowrefresh-1-w" />   
+            <p:menuitem value="Ver NCFAS de tipo Final"  actionListener="#{menuBeanAdministrador.verNcfasFinales}" icon="ui-icon-arrowrefresh-1-w" />
+            <p:menuitem value="Ver NCFAS por Fecha"  actionListener="#{menuBeanAdministrador.verNcfasPorFecha}" icon="ui-icon-arrowrefresh-1-w" />
+        
+        </p:submenu>
+        
+        <p:submenu label="Módulo Minería de Datos">
+            <p:menuitem value="Generar Minería" actionListener="#{menuBeanAdministrador.mineriadedatos}" icon="ui-icon-wrench"/>
+        </p:submenu>
+        
+        <p:submenu label="Módulo Estadística Desciptiva">
+            <p:menuitem value="Ver Gráfico Seleccionando NCFAS" actionListener="#{menuBeanAdministrador.estadistica}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de Items " actionListener="#{menuBeanAdministrador.comparar}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de Items Generales" actionListener="#{menuBeanAdministrador.comparar2}" icon="ui-icon-bookmark"/>
+            <p:menuitem value="Ver Gráfico de Comparación de fecha de Inicio y fecha Final" actionListener="#{menuBeanAdministrador.comparar3}" icon="ui-icon-bookmark"/>
+        </p:submenu>
+    </p:panelMenu>
+
+         <p:panelGrid columns="2">
+    <f:facet name="header">
+        <img src="/WebApplication5/resources/imagen/mujer.png" alt=""/>
+    </f:facet>
+ 
+    <h:outputText value="Nombre:" />
+    <h:outputText value="#{mbsesionBean.nombreusuario}" />
+ 
+    <h:outputText value="Tipo:" />
+    <h:outputText value="Administrador" />
+ 
+</p:panelGrid>
+<h:commandButton id="salir" class="btn btn-info" value="Salir" action="#{usuarioBean.logout()}" />
+</h:form> 
+</div>
+                    
+                    
+<div class="col-md-8" style="margin: 10px">
+             <p:growl id="msgs" showDetail="true" />
+             <h:form>
+                    <p:fieldset legend="Bienvenido al Sistema NCFAS"  style="margin-bottom:15px"> 
+                       <p id="letrasinicio"> En esta sección ud. podrá ingresar nuevos NCFAS al sistema, además de revisarlos y ver gráficos lineales de sus datos respectivos. </p>
+                    </p:fieldset>
+             </h:form>
+</div>  
+                    
+</div>
+</h:body>
+</f:view>
+</html>
